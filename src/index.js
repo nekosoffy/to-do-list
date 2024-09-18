@@ -1,7 +1,7 @@
 import "./reset.css";
 import "./styles.css";
 
-const projectList = [{ default: [] }];
+const projectList = [{ "Default": [] }];
 let activeProject = 0;
 
 function createToDoList(title, description, dueDate, priority, notes) {
@@ -12,4 +12,9 @@ function createToDoList(title, description, dueDate, priority, notes) {
     for (const key in project) {
         project[key].push(list);
     }
+}
+
+function createProject(title) {
+    const project = { [title]: [] };
+    projectList.push(project);
 }

@@ -1,8 +1,9 @@
 import "./reset.css";
 import "./styles.css";
+import { projectDisplay } from "./display.js";
 
 const manageProject = () => {
-    const projectList = [{ "Default": [] }];
+    const projectList = [{ "Default Project": [] }];
     let selectedProject = 0;
 
     function create(title) {
@@ -138,3 +139,7 @@ const manageToDo = () => {
 }
 
 const task = manageToDo();
+
+projectDisplay();
+
+export { task, project };

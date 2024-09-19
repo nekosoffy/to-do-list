@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>To-do List</title>
 </head>
 <body>
-
+    <main>
+        <div id="projects-container"></div>
+        <button type="button" id="new-project">New Project</button>
+    </main>
+    <dialog id="project-dialog">
+        <form id="project-form">
+            <div class="input-wrapper">
+                <label for="project-title">Name your project:</label>
+                <input type="text" id="project-title" maxlength="100" required />
+            </div>
+            <button type="button" class="cancel-btn">Cancel</button>
+            <button type="submit" formmethod="dialog" class="confirm-btn">Confirm</button>
+        </form>
+    </dialog>
 </body>
 </html>

@@ -11,7 +11,7 @@ const manageProject = () => {
     }
 
     function remove(projectIndex) {
-        if (projectIndex > projectList.length-1 || 
+        if (projectIndex >= projectList.length || 
             projectIndex < 0 ||
             !Number.isInteger(projectIndex)) {
                 console.log("Invalid value!");
@@ -28,7 +28,7 @@ const manageProject = () => {
     }
 
     function select(projectIndex) {
-        if (projectIndex > projectList.length-1 || 
+        if (projectIndex >= projectList.length || 
             projectIndex < 0 ||
             !Number.isInteger(projectIndex)) {
                 console.log("Invalid value!");
@@ -76,7 +76,7 @@ const manageToDo = () => {
     function edit(toDoIndex, property, newValue) {
         const toDosArray = getToDosArray();
 
-        if (toDoIndex > toDosArray.length-1 || 
+        if (toDoIndex >= toDosArray.length || 
             toDoIndex < 0 ||
             !Number.isInteger(toDoIndex)) {
                 console.log("Invalid value!");
@@ -96,7 +96,7 @@ const manageToDo = () => {
     function remove(toDoIndex) {
         const toDosArray = getToDosArray();
 
-        if (toDoIndex > toDosArray.length-1 || 
+        if (toDoIndex >= toDosArray.length || 
             toDoIndex < 0 ||
             !Number.isInteger(toDoIndex)) {
                 console.log("Invalid value!");
@@ -109,7 +109,7 @@ const manageToDo = () => {
     function editChecklist(toDoIndex, checklistItemIndex, newItem) {
         const toDosArray = getToDosArray();
         
-        if (toDoIndex > toDosArray.length-1 || 
+        if (toDoIndex >= toDosArray.length || 
             toDoIndex < 0 ||
             !Number.isInteger(toDoIndex)) {
                 console.log("Invalid value!");
@@ -124,7 +124,7 @@ const manageToDo = () => {
     function markCompletion(toDoIndex) {
         const toDosArray = getToDosArray();
 
-        if (toDoIndex > toDosArray.length-1 || 
+        if (toDoIndex >= toDosArray.length || 
             toDoIndex < 0 ||
             !Number.isInteger(toDoIndex)) {
                 console.log("Invalid value!");

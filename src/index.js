@@ -5,37 +5,36 @@ const projectList = [{ "Default": [] }];
 let activeProject = 0;
 
 const manageToDo = () => {
-    const i = activeProject;
-    const project = projectList[i];
+    const project = projectList[activeProject];
     
     function create(title, description, dueDate, priority, notes) {
         const list = {title, description, dueDate, priority, notes};
-        for (const key in project) {
-            project[key].push(list);
+        for (const toDosArray in project) {
+            project[toDosArray].push(list);
         }
     }
 
-    function edit(index, property, newValue) {
-        for (const key in project) {
-            if (index > project[key].length || 
-                index < 0 ||
-                !Number.isInteger(index)) {
+    function edit(toDoIndex, property, newValue) {
+        for (const toDosArray in project) {
+            if (toDoIndex > project[toDosArray].length || 
+                toDoIndex < 0 ||
+                !Number.isInteger(toDoIndex)) {
                     console.log("Invalid value!");
                     return;
             }
-            project[key][index][property] = newValue;
+            project[toDosArray][toDoIndex][property] = newValue;
         }
     }
 
-    function remove(index) {
-        for (const key in project) {
-            if (index > project[key].length || 
-                index < 0 ||
-                !Number.isInteger(index)) {
+    function remove(toDoIndex) {
+        for (const toDosArray in project) {
+            if (toDoIndex > project[toDosArray].length || 
+                toDoIndex < 0 ||
+                !Number.isInteger(toDoIndex)) {
                     console.log("Invalid value!");
                     return;
             }
-            project[key].splice(index, 1);
+            project[toDosArray].splice(toDoIndex, 1);
         }
     }
 
@@ -48,14 +47,14 @@ const manageProject = () => {
         projectList.push(project);
     }
 
-    function remove(index) {
-        if (index > projectList.length || 
-            index < 0 ||
-            !Number.isInteger(index)) {
+    function remove(projectIndex) {
+        if (projectIndex > projectList.length || 
+            projectIndex < 0 ||
+            !Number.isInteger(projectIndex)) {
                 console.log("Invalid value!");
                 return;
         }
-        projectList.splice(index, 1);
+        projectList.splice(projectIndex, 1);
     }
 
     return { create, remove };

@@ -49,8 +49,12 @@ const project = manageProject();
 
 const manageToDo = () => {
     
-    function create(title, description, dueDate, priority, notes) {
+    function create(title, description, dueDate, priority, notes, ...checklist) {
         const currentProject = project.getProjectList()[project.getSelectedProject()];
+
+        const formattedChecklist = checklist.map(item => {
+            return {[item]: "not completed"};
+        });
 
         const list = { 
             title, 
@@ -58,8 +62,9 @@ const manageToDo = () => {
             dueDate, 
             priority, 
             notes, 
-            completed: false 
-        };
+            checklist: [formattedChecklist],
+            completed: false
+        }
 
         for (const toDosArray in currentProject) {
             currentProject[toDosArray].push(list);
@@ -70,7 +75,7 @@ const manageToDo = () => {
         const currentProject = project.getProjectList()[project.getSelectedProject()];
 
         for (const toDosArray in currentProject) {
-            if (toDoIndex > project[toDosArray].length-1 || 
+            if (toDoIndex > currentProject[toDosArray].length-1 || 
                 toDoIndex < 0 ||
                 !Number.isInteger(toDoIndex)) {
                     console.log("Invalid value!");
@@ -98,3 +103,5 @@ const manageToDo = () => {
 
     return { remove, create, edit };
 }
+
+const task = manageToDo();

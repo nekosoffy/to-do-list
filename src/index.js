@@ -48,10 +48,13 @@ const manageProject = () => {
 const project = manageProject();
 
 const manageToDo = () => {
+    const getToDosArray = () => {
+        const currentProject = project.getProjectList()[project.getSelectedProject()];
+        return Object.values(currentProject)[0];
+    };
     
     function create(title, description, dueDate, priority, notes, ...checklist) {
-        const currentProject = project.getProjectList()[project.getSelectedProject()];
-        const toDosArray = Object.values(currentProject)[0];
+        const toDosArray = getToDosArray();
 
         const formattedChecklist = checklist.map(item => {
             return {[item]: "not completed"};
@@ -71,8 +74,7 @@ const manageToDo = () => {
     }
 
     function edit(toDoIndex, property, newValue) {
-        const currentProject = project.getProjectList()[project.getSelectedProject()];
-        const toDosArray = Object.values(currentProject)[0];
+        const toDosArray = getToDosArray();
 
         if (toDoIndex > toDosArray.length-1 || 
             toDoIndex < 0 ||
@@ -92,8 +94,7 @@ const manageToDo = () => {
     }
 
     function remove(toDoIndex) {
-        const currentProject = project.getProjectList()[project.getSelectedProject()];
-        const toDosArray = Object.values(currentProject)[0];
+        const toDosArray = getToDosArray();
 
         if (toDoIndex > toDosArray.length-1 || 
             toDoIndex < 0 ||
@@ -106,8 +107,7 @@ const manageToDo = () => {
     }
 
     function editChecklist(toDoIndex, checklistItemIndex, newItem) {
-        const currentProject = project.getProjectList()[project.getSelectedProject()];
-        const toDosArray = Object.values(currentProject)[0];
+        const toDosArray = getToDosArray();
         
         if (toDoIndex > toDosArray.length-1 || 
             toDoIndex < 0 ||

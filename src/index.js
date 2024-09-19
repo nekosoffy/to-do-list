@@ -15,6 +15,18 @@ const manageToDo = () => {
         }
     }
 
+    function edit(index, property, newValue) {
+        for (const key in project) {
+            if (index > project[key].length || 
+                index < 0 ||
+                !Number.isInteger(index)) {
+                    console.log("Invalid value!");
+                    return;
+            }
+            project[key][index][property] = newValue;
+        }
+    }
+
     function remove(index) {
         for (const key in project) {
             if (index > project[key].length || 
@@ -27,7 +39,7 @@ const manageToDo = () => {
         }
     }
 
-    return { remove, create };
+    return { remove, create, edit };
 }
 
 const manageProject = () => {

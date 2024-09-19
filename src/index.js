@@ -62,7 +62,7 @@ const manageToDo = () => {
             dueDate, 
             priority, 
             notes, 
-            checklist: [formattedChecklist],
+            checklist: formattedChecklist,
             completed: false
         }
 
@@ -72,17 +72,24 @@ const manageToDo = () => {
     }
 
     function edit(toDoIndex, property, newValue) {
-        const currentProject = project.getProjectList()[project.getSelectedProject()];
+        let validProperties = [
+            "title", "description", "dueDate",
+            "priority", "notes"
+        ] 
 
-        for (const toDosArray in currentProject) {
-            if (toDoIndex > currentProject[toDosArray].length-1 || 
-                toDoIndex < 0 ||
-                !Number.isInteger(toDoIndex)) {
-                    console.log("Invalid value!");
-                    return;
+        if (validProperties.includes(property)) {
+            const currentProject = project.getProjectList()[project.getSelectedProject()];
+
+            for (const toDosArray in currentProject) {
+                if (toDoIndex > currentProject[toDosArray].length-1 || 
+                    toDoIndex < 0 ||
+                    !Number.isInteger(toDoIndex)) {
+                        console.log("Invalid value!");
+                        return;
+                }
+
+                currentProject[toDosArray][toDoIndex][property] = newValue;
             }
-
-            currentProject[toDosArray][toDoIndex][property] = newValue;
         }
     }
 
@@ -101,7 +108,26 @@ const manageToDo = () => {
         }
     }
 
-    return { remove, create, edit };
+    function editChecklist(toDoIndex, checklistItemIndex, newValue) {
+        const currentProject = project.getProjectList()[project.getSelectedProject()];
+        
+        for (const toDosArray in currentProject) {
+            if (toDoIndex > currentProject[toDosArray].length-1 || 
+                toDoIndex < 0 ||
+                !Number.isInteger(toDoIndex)) {
+                    console.log("Invalid value!");
+                    return;
+            }
+
+            let checklistItem = currentProject[toDosArray][toDoIndex]["checklist"][checklistItemIndex];
+            for (let key in checklistItem) {
+                checklistItem = {[newValue] : checklistItem[key]};
+            }
+            currentProject[toDosArray][toDoIndex]["checklist"][checklistItemIndex] = checklistItem;
+        }
+    }
+
+    return { remove, create, edit, editChecklist };
 }
 
 const task = manageToDo();

@@ -64,9 +64,26 @@ const manageProject = () => {
                 console.log("Invalid value!");
                 return;
         }
-        
+
         projectList.splice(projectIndex, 1);
+
+        if (activeProject > projectIndex ||
+            activeProject === projectIndex && 
+            activeProject > projectList.length-1) {
+            activeProject -= 1;
+        }
     }
 
-    return { create, remove };
+    function select(projectIndex) {
+        if (projectIndex > projectList.length-1 || 
+            projectIndex < 0 ||
+            !Number.isInteger(projectIndex)) {
+                console.log("Invalid value!");
+                return;
+        }
+
+        activeProject = projectIndex;
+    }
+
+    return { create, remove, select };
 }

@@ -16,6 +16,7 @@ const manageToDo = () => {
             notes, 
             completed: false 
         };
+
         for (const toDosArray in project) {
             project[toDosArray].push(list);
         }
@@ -29,6 +30,7 @@ const manageToDo = () => {
                     console.log("Invalid value!");
                     return;
             }
+
             project[toDosArray][toDoIndex][property] = newValue;
         }
     }
@@ -41,6 +43,7 @@ const manageToDo = () => {
                     console.log("Invalid value!");
                     return;
             }
+
             project[toDosArray].splice(toDoIndex, 1);
         }
     }
@@ -61,6 +64,7 @@ const manageProject = () => {
                 console.log("Invalid value!");
                 return;
         }
+        
         projectList.splice(projectIndex, 1);
     }
 

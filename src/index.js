@@ -51,6 +51,7 @@ const manageToDo = () => {
     
     function create(title, description, dueDate, priority, notes, ...checklist) {
         const currentProject = project.getProjectList()[project.getSelectedProject()];
+        const toDosArray = Object.values(currentProject)[0];
 
         const formattedChecklist = checklist.map(item => {
             return {[item]: "not completed"};
@@ -65,66 +66,59 @@ const manageToDo = () => {
             checklist: formattedChecklist,
             completed: false
         }
-
-        for (const toDosArray in currentProject) {
-            currentProject[toDosArray].push(list);
-        }
+        
+        toDosArray.push(list);
     }
 
     function edit(toDoIndex, property, newValue) {
+        const currentProject = project.getProjectList()[project.getSelectedProject()];
+        const toDosArray = Object.values(currentProject)[0];
+
+        if (toDoIndex > toDosArray.length-1 || 
+            toDoIndex < 0 ||
+            !Number.isInteger(toDoIndex)) {
+                console.log("Invalid value!");
+                return;
+        }
+
         let validProperties = [
             "title", "description", "dueDate",
             "priority", "notes"
         ] 
 
         if (validProperties.includes(property)) {
-            const currentProject = project.getProjectList()[project.getSelectedProject()];
-
-            for (const toDosArray in currentProject) {
-                if (toDoIndex > currentProject[toDosArray].length-1 || 
-                    toDoIndex < 0 ||
-                    !Number.isInteger(toDoIndex)) {
-                        console.log("Invalid value!");
-                        return;
-                }
-
-                currentProject[toDosArray][toDoIndex][property] = newValue;
-            }
+            toDosArray[toDoIndex][property] = newValue;
         }
     }
 
     function remove(toDoIndex) {
         const currentProject = project.getProjectList()[project.getSelectedProject()];
+        const toDosArray = Object.values(currentProject)[0];
 
-        for (const toDosArray in currentProject) {
-            if (toDoIndex > currentProject[toDosArray].length-1 || 
-                toDoIndex < 0 ||
-                !Number.isInteger(toDoIndex)) {
-                    console.log("Invalid value!");
-                    return;
-            }
-
-            currentProject[toDosArray].splice(toDoIndex, 1);
+        if (toDoIndex > toDosArray.length-1 || 
+            toDoIndex < 0 ||
+            !Number.isInteger(toDoIndex)) {
+                console.log("Invalid value!");
+                return;
         }
+
+        toDosArray.splice(toDoIndex, 1);
     }
 
-    function editChecklist(toDoIndex, checklistItemIndex, newValue) {
+    function editChecklist(toDoIndex, checklistItemIndex, newItem) {
         const currentProject = project.getProjectList()[project.getSelectedProject()];
+        const toDosArray = Object.values(currentProject)[0];
         
-        for (const toDosArray in currentProject) {
-            if (toDoIndex > currentProject[toDosArray].length-1 || 
-                toDoIndex < 0 ||
-                !Number.isInteger(toDoIndex)) {
-                    console.log("Invalid value!");
-                    return;
-            }
-
-            let checklistItem = currentProject[toDosArray][toDoIndex]["checklist"][checklistItemIndex];
-            for (let key in checklistItem) {
-                checklistItem = {[newValue] : checklistItem[key]};
-            }
-            currentProject[toDosArray][toDoIndex]["checklist"][checklistItemIndex] = checklistItem;
+        if (toDoIndex > toDosArray.length-1 || 
+            toDoIndex < 0 ||
+            !Number.isInteger(toDoIndex)) {
+                console.log("Invalid value!");
+                return;
         }
+
+        const currentCompletion = Object.values(toDosArray[toDoIndex]["checklist"][checklistItemIndex])[0];
+        const editedChecklistItem = {[newItem] : currentCompletion};
+        toDosArray[toDoIndex]["checklist"][checklistItemIndex] = editedChecklistItem;
     }
 
     return { remove, create, edit, editChecklist };

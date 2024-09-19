@@ -121,7 +121,20 @@ const manageToDo = () => {
         toDosArray[toDoIndex]["checklist"][checklistItemIndex] = editedChecklistItem;
     }
 
-    return { remove, create, edit, editChecklist };
+    function markCompletion(toDoIndex) {
+        const toDosArray = getToDosArray();
+
+        if (toDoIndex > toDosArray.length-1 || 
+            toDoIndex < 0 ||
+            !Number.isInteger(toDoIndex)) {
+                console.log("Invalid value!");
+                return;
+        }
+
+        toDosArray[toDoIndex]["completed"] = !toDosArray[toDoIndex]["completed"];
+    }
+
+    return { remove, create, edit, editChecklist, markCompletion };
 }
 
 const task = manageToDo();

@@ -2,13 +2,20 @@ import "./reset.css";
 import "./styles.css";
 
 const projectList = [{ "Default": [] }];
-let activeProject = 0;
+let activeProject = null;
 
 const manageToDo = () => {
     const project = projectList[activeProject];
     
     function create(title, description, dueDate, priority, notes) {
-        const list = {title, description, dueDate, priority, notes};
+        const list = { 
+            title, 
+            description, 
+            dueDate, 
+            priority, 
+            notes, 
+            completed: false 
+        };
         for (const toDosArray in project) {
             project[toDosArray].push(list);
         }
@@ -16,7 +23,7 @@ const manageToDo = () => {
 
     function edit(toDoIndex, property, newValue) {
         for (const toDosArray in project) {
-            if (toDoIndex > project[toDosArray].length || 
+            if (toDoIndex > project[toDosArray].length-1 || 
                 toDoIndex < 0 ||
                 !Number.isInteger(toDoIndex)) {
                     console.log("Invalid value!");
@@ -28,7 +35,7 @@ const manageToDo = () => {
 
     function remove(toDoIndex) {
         for (const toDosArray in project) {
-            if (toDoIndex > project[toDosArray].length || 
+            if (toDoIndex > project[toDosArray].length-1 || 
                 toDoIndex < 0 ||
                 !Number.isInteger(toDoIndex)) {
                     console.log("Invalid value!");
@@ -48,7 +55,7 @@ const manageProject = () => {
     }
 
     function remove(projectIndex) {
-        if (projectIndex > projectList.length || 
+        if (projectIndex > projectList.length-1 || 
             projectIndex < 0 ||
             !Number.isInteger(projectIndex)) {
                 console.log("Invalid value!");

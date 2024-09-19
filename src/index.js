@@ -4,28 +4,30 @@ import "./styles.css";
 const projectList = [{ "Default": [] }];
 let activeProject = 0;
 
-function createToDoList(title, description, dueDate, priority, notes) {
-    const list = { title, description, dueDate, priority, notes };
+const toDo = () => {
     const i = activeProject;
     const project = projectList[i];
     
-    for (const key in project) {
-        project[key].push(list);
-    }
-}
-
-function deleteToDoList(index) {
-    const i = activeProject;
-    const project = projectList[i];
-    
-    for (const key in project) {
-        if (index > project[key].length || 
-            index < 0 ||
-            !Number.isInteger(index)) {
-                console.log("Invalid value!");
+    function create(title, description, dueDate, priority, notes) {
+        const list = {title, description, dueDate, priority, notes};
+        for (const key in project) {
+            project[key].push(list);
         }
-        project[key].splice(index, 1);
     }
+
+    function remove(index) {
+        for (const key in project) {
+            if (index > project[key].length || 
+                index < 0 ||
+                !Number.isInteger(index)) {
+                    console.log("Invalid value!");
+                    return;
+            }
+            project[key].splice(index, 1);
+        }
+    }
+
+    return { remove, create };
 }
 
 function createProject(title) {

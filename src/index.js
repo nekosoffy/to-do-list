@@ -4,7 +4,7 @@ import "./styles.css";
 const projectList = [{ "Default": [] }];
 let activeProject = 0;
 
-const toDo = () => {
+const manageToDo = () => {
     const i = activeProject;
     const project = projectList[i];
     
@@ -30,7 +30,21 @@ const toDo = () => {
     return { remove, create };
 }
 
-function createProject(title) {
-    const project = { [title]: [] };
-    projectList.push(project);
+const manageProject = () => {
+    function create(title) {
+        const project = { [title]: [] };
+        projectList.push(project);
+    }
+
+    function remove(index) {
+        if (index > projectList.length || 
+            index < 0 ||
+            !Number.isInteger(index)) {
+                console.log("Invalid value!");
+                return;
+        }
+        projectList.splice(index, 1);
+    }
+
+    return { create, remove };
 }

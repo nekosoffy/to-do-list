@@ -71,6 +71,20 @@ const projectDisplay = () => {
         project.populateStorage();
     }
 
+    function showForm () {
+        projectForm.classList.remove("hidden");
+        newProjectBtn.classList.add("hidden");
+    }
+
+    function hideForm () {
+        projectForm.classList.add("hidden");
+        newProjectBtn.classList.remove("hidden");
+        projectForm.reset();
+        label.textContent = "Name your project:";
+        editMode = false;
+        currentIndex = null;
+    }
+
     function handleSubmit(event) {
         if (editMode === false) {
             event.preventDefault();
@@ -97,29 +111,14 @@ const projectDisplay = () => {
         } else if (button.classList.contains("delete-btn")) {
             project.remove(currentIndex);
             updateProjects();
-        } else {
-            hideForm();
+        } else if (projectForm.classList.contains("hidden")) {
             project.select(currentIndex);
         }
     }
 
-    function showForm () {
-        projectForm.classList.remove("hidden");
-        newProjectBtn.classList.add("hidden");
-    }
-
-    function hideForm () {
-        projectForm.classList.add("hidden");
-        newProjectBtn.classList.remove("hidden");
-        projectForm.reset();
-        label.textContent = "Name your project:";
-        editMode = false;
-        currentIndex = null;
-    }
-
     newProjectBtn.addEventListener("click", showForm);
     projectForm.addEventListener("submit", handleSubmit);
-
+    
     cancelBtn.addEventListener("click", () => {
         hideForm();
     });

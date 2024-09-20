@@ -31,7 +31,6 @@ function create(name, parent, id, htmlClass, text) {
 
 const projectDisplay = () => {
     const newProjectBtn = selectId("new-project");
-    const projectDialog = selectId("project-dialog");
     const projectForm = selectId("project-form");
     const cancelBtn = select(".cancel-btn");
     const label = select("[for=project-title]");
@@ -72,18 +71,17 @@ const projectDisplay = () => {
         project.populateStorage();
     }
 
-    function handleSubmit() {
+    function handleSubmit(event) {
         if (editMode === false) {
+            event.preventDefault();
             project.create(projectTitle.value);
+            hideForm();
             updateProjects();
-            projectForm.reset();
         } else {
-            label.textContent = "Name your project:";
+            event.preventDefault();
             project.edit(currentIndex, projectTitle.value);
-            editMode = false;
-            currentIndex = null;
+            hideForm();
             updateProjects();
-            projectForm.reset();
         }
     }
 
@@ -94,25 +92,37 @@ const projectDisplay = () => {
             label.textContent = "New name:";
             const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
             projectTitle.value = currentTitle; // Set the input's content to default to the current title when editing.
-            projectDialog.showModal();
+            showForm();
             editMode = true;
         } else if (button.classList.contains("delete-btn")) {
             project.remove(currentIndex);
             updateProjects();
         } else {
+            hideForm();
             project.select(currentIndex);
         }
     }
 
-    newProjectBtn.addEventListener("click", () => projectDialog.showModal());
-    cancelBtn.addEventListener("click", () => {
-        projectDialog.close();
+    function showForm () {
+        projectForm.classList.remove("hidden");
+        newProjectBtn.classList.add("hidden");
+    }
+
+    function hideForm () {
+        projectForm.classList.add("hidden");
+        newProjectBtn.classList.remove("hidden");
         projectForm.reset();
+        label.textContent = "Name your project:";
         editMode = false;
         currentIndex = null;
-        label.textContent = "Name your project:";
-    });
+    }
+
+    newProjectBtn.addEventListener("click", showForm);
     projectForm.addEventListener("submit", handleSubmit);
+
+    cancelBtn.addEventListener("click", () => {
+        hideForm();
+    });
 
     updateProjects();
 }

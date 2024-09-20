@@ -3,7 +3,7 @@ import "./styles.css";
 import { projectDisplay } from "./display.js";
 
 const manageProject = () => {
-    const projectList = [{ "Default Project": [] }];
+    let projectList = [{ "Default Project": [] }];
     let selectedProject = 0;
 
     function create(title) {
@@ -56,11 +56,23 @@ const manageProject = () => {
         selectedProject = projectIndex;
     }
 
+    function populateStorage() {
+        localStorage.setItem("projects", JSON.stringify(projectList));
+    }
+
+    function getStorage() {
+        if (!localStorage.getItem("projects")) {
+            populateStorage();
+        } else {
+            projectList = JSON.parse(localStorage.getItem("projects"));
+        }   
+    }
+
     const getProjectList = () => projectList;
     const getSelectedProject = () => selectedProject;
 
-    return { create, edit, remove, select, 
-        getSelectedProject, getProjectList };
+    return { create, edit, remove, select, getSelectedProject, 
+        getProjectList, populateStorage, getStorage };
 }
 
 const project = manageProject();
@@ -157,10 +169,7 @@ const manageToDo = () => {
 
 const task = manageToDo();
 
-const localStorage = () => {
-    
-}
-
+project.getStorage();
 projectDisplay();
 
 export { task, project };

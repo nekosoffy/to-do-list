@@ -68,6 +68,8 @@ const projectDisplay = () => {
             !firstProject.contains(deleteBtn)) {
                 create("button", firstProject, "", "delete-btn", "Delete"); // Allows deleting default project after there being another one.
         }
+
+        project.populateStorage();
     }
 
     function handleSubmit() {

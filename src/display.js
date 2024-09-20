@@ -42,13 +42,14 @@ const projectDisplay = () => {
             create("div", projectsContainer, "", "project-wrapper");
             const wrapper = select(".project-wrapper");
             wrapper.setAttribute("data-index", index);
-            create("p", wrapper, "", "", `${Object.keys(project)[0]}`);
+            create("p", wrapper, "", "", `${Object.keys(project)[0]}`)
         })
     }
 
     function handleSubmit() {
         project.create(projectTitle.value);
         updateProjects();
+        projectForm.reset();
     }
 
     newProjectBtn.addEventListener("click", () => projectDialog.showModal());

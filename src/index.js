@@ -11,6 +11,17 @@ const manageProject = () => {
         projectList.push(project);
     }
 
+    function edit(projectIndex, newTitle) {
+        if (projectIndex >= projectList.length || 
+            projectIndex < 0 ||
+            !Number.isInteger(projectIndex)) {
+                console.log("Invalid value!");
+                return;
+        }
+
+        Object.keys(projectList[projectIndex])[0] = newTitle;
+    }
+
     function remove(projectIndex) {
         if (projectIndex >= projectList.length || 
             projectIndex < 0 ||
@@ -42,7 +53,7 @@ const manageProject = () => {
     const getProjectList = () => projectList;
     const getSelectedProject = () => selectedProject;
 
-    return { create, remove, select, 
+    return { create, edit, remove, select, 
         getSelectedProject, getProjectList };
 }
 

@@ -18,7 +18,8 @@ function create(name, parent, id, htmlClass, text) {
         element.classList.add(htmlClass);
     }
 
-    if (text !== undefined) {
+    if (text !== undefined &&
+        text !== "") {
         element.textContent = text;
     }
 
@@ -39,10 +40,11 @@ const projectDisplay = () => {
     function updateProjects() {
         projectsContainer.replaceChildren();
         project.getProjectList().forEach((project, index) => {
-            create("div", projectsContainer, "", "project-wrapper");
-            const wrapper = select(".project-wrapper");
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("project-wrapper");
             wrapper.setAttribute("data-index", index);
-            create("p", wrapper, "", "", `${Object.keys(project)[0]}`)
+            wrapper.addEventListener("click", handleBtnClick);
+            create("p", wrapper, "", "", `${Object.keys(project)[0]}`);
         })
     }
 

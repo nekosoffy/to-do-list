@@ -19,7 +19,9 @@ const manageProject = () => {
                 return;
         }
 
-        Object.keys(projectList[projectIndex])[0] = newTitle;
+        const currentToDos = Object.values(projectList[projectIndex])[0];
+        const editedProject = {[newTitle] : currentToDos};
+        projectList[projectIndex] = editedProject;
     }
 
     function remove(projectIndex) {

@@ -49,6 +49,7 @@ const projectDisplay = () => {
             wrapper.addEventListener("click", handleBtnClick);
             create("p", wrapper, "", "", `${Object.keys(project)[0]}`);
             create("button", wrapper, "", "edit-btn", "Edit");
+            create("button", wrapper, "", "delete-btn", "Delete");
             projectsContainer.appendChild(wrapper);
         })
     }
@@ -75,6 +76,9 @@ const projectDisplay = () => {
             projectTitle.value = currentTitle; // Set the input's content to default to the current title when editing.
             projectDialog.showModal();
             editMode = true;
+        } else if (button.classList.contains("delete-btn")) {
+            project.remove(currentIndex);
+            updateProjects();
         }
     }
 

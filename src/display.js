@@ -47,7 +47,7 @@ const projectDisplay = () => {
             const wrapper = document.createElement("div");
             wrapper.classList.add("project-wrapper");
             wrapper.setAttribute("data-index", index);
-            wrapper.addEventListener("click", handleBtnClick);
+            wrapper.addEventListener("click", handleClick);
             create("p", wrapper, "", "", `${Object.keys(project)[0]}`);
             create("button", wrapper, "", "edit-btn", "Edit");
             
@@ -76,7 +76,7 @@ const projectDisplay = () => {
         }
     }
 
-    function handleBtnClick(event) {
+    function handleClick(event) {
         const button = event.target;
         currentIndex = parseInt(button.closest("[data-index]").dataset.index);
         if (button.classList.contains("edit-btn")) {
@@ -88,6 +88,8 @@ const projectDisplay = () => {
         } else if (button.classList.contains("delete-btn")) {
             project.remove(currentIndex);
             updateProjects();
+        } else {
+            project.select(currentIndex);
         }
     }
 

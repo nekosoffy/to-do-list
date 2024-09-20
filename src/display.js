@@ -89,7 +89,7 @@ const projectDisplay = () => {
         const button = event.target;
         currentIndex = parseInt(button.closest("[data-index]").dataset.index);
         if (button.classList.contains("edit-btn")) {
-            label.textContent = "New name:";
+            label.textContent = "New title:";
             const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
             projectTitle.value = currentTitle; // Set the input's content to default to the current title when editing.
             showForm();

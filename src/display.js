@@ -36,6 +36,9 @@ const projectDisplay = () => {
     const cancelBtn = select(".cancel-btn");
     const projectTitle = selectId("project-title");
     const projectsContainer = selectId("projects-container");
+    const wrapper = select(".project-wrapper");
+    let editMode = false;
+    let currentIndex = null;
 
     function updateProjects() {
         projectsContainer.replaceChildren();
@@ -45,13 +48,34 @@ const projectDisplay = () => {
             wrapper.setAttribute("data-index", index);
             wrapper.addEventListener("click", handleBtnClick);
             create("p", wrapper, "", "", `${Object.keys(project)[0]}`);
+            create("button", wrapper, "", "edit-btn", "Edit");
+            projectsContainer.appendChild(wrapper);
         })
     }
 
     function handleSubmit() {
-        project.create(projectTitle.value);
-        updateProjects();
-        projectForm.reset();
+        if (editMode === false) {
+            project.create(projectTitle.value);
+            updateProjects();
+            projectForm.reset();
+        } else {
+            project.edit(currentIndex, projectTitle.value);
+            editMode = false;
+            currentIndex = null;
+            updateProjects();
+            projectForm.reset();
+        }
+    }
+
+    function handleBtnClick(event) {
+        const button = event.target;
+        currentIndex = parseInt(button.closest("[data-index]").dataset.index);
+        if (button.classList.contains("edit-btn")) {
+            const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
+            projectTitle.value = currentTitle; // Set the input's content to default to the current title when editing.
+            projectDialog.showModal();
+            editMode = true;
+        }
     }
 
     newProjectBtn.addEventListener("click", () => projectDialog.showModal());

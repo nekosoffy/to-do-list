@@ -34,6 +34,7 @@ const projectDisplay = () => {
     const projectDialog = selectId("project-dialog");
     const projectForm = selectId("project-form");
     const cancelBtn = select(".cancel-btn");
+    const label = select("[for=project-title]");
     const projectTitle = selectId("project-title");
     const projectsContainer = selectId("projects-container");
     const wrapper = select(".project-wrapper");
@@ -66,6 +67,7 @@ const projectDisplay = () => {
             updateProjects();
             projectForm.reset();
         } else {
+            label.textContent = "Name your project:";
             project.edit(currentIndex, projectTitle.value);
             editMode = false;
             currentIndex = null;
@@ -78,6 +80,7 @@ const projectDisplay = () => {
         const button = event.target;
         currentIndex = parseInt(button.closest("[data-index]").dataset.index);
         if (button.classList.contains("edit-btn")) {
+            label.textContent = "New name:";
             const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
             projectTitle.value = currentTitle; // Set the input's content to default to the current title when editing.
             projectDialog.showModal();
@@ -94,6 +97,7 @@ const projectDisplay = () => {
         projectForm.reset();
         editMode = false;
         currentIndex = null;
+        label.textContent = "Name your project:";
     });
     projectForm.addEventListener("submit", handleSubmit);
 

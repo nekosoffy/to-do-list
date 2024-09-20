@@ -19,8 +19,8 @@ const manageProject = () => {
                 return;
         }
 
-        const currentToDos = Object.values(projectList[projectIndex])[0];
-        const editedProject = {[newTitle] : currentToDos};
+        const currentTasks = Object.values(projectList[projectIndex])[0];
+        const editedProject = {[newTitle] : currentTasks};
         projectList[projectIndex] = editedProject;
     }
 
@@ -77,38 +77,38 @@ const manageProject = () => {
 
 const project = manageProject();
 
-const manageToDo = () => {
-    const getToDosArray = () => {
+const manageTask = () => {
+    const getTasksArray = () => {
         const currentProject = project.getProjectList()[project.getSelectedProject()];
         return Object.values(currentProject)[0];
     };
     
     function create(title, description, dueDate, priority, notes, ...checklist) {
-        const toDosArray = getToDosArray();
+        const tasksArray = getTasksArray();
 
         const formattedChecklist = checklist.map(item => {
             return {[item]: "not completed"};
         });
 
-        const list = { 
-            title, 
-            description, 
-            dueDate, 
-            priority, 
-            notes, 
-            checklist: formattedChecklist,
-            completed: false
-        }
-        
-        toDosArray.push(list);
+        const list = [
+            {title}, 
+            {description}, 
+            {dueDate}, 
+            {priority}, 
+            {notes}, 
+            {checklist: formattedChecklist},
+            {completed: false}
+        ]
+
+        tasksArray.push(list);
     }
 
-    function edit(toDoIndex, property, newValue) {
-        const toDosArray = getToDosArray();
+    function edit(taskIndex, property, newValue) {
+        const tasksArray = getTasksArray();
 
-        if (toDoIndex >= toDosArray.length || 
-            toDoIndex < 0 ||
-            !Number.isInteger(toDoIndex)) {
+        if (taskIndex >= tasksArray.length || 
+            taskIndex < 0 ||
+            !Number.isInteger(taskIndex)) {
                 console.log("Invalid value!");
                 return;
         }
@@ -119,55 +119,55 @@ const manageToDo = () => {
         ] 
 
         if (validProperties.includes(property)) {
-            toDosArray[toDoIndex][property] = newValue;
+            tasksArray[taskIndex][0][property] = newValue;
         }
     }
 
-    function remove(toDoIndex) {
-        const toDosArray = getToDosArray();
+    function remove(taskIndex) {
+        const TasksArray = getTasksArray();
 
-        if (toDoIndex >= toDosArray.length || 
-            toDoIndex < 0 ||
-            !Number.isInteger(toDoIndex)) {
+        if (taskIndex >= TasksArray.length || 
+            taskIndex < 0 ||
+            !Number.isInteger(taskIndex)) {
                 console.log("Invalid value!");
                 return;
         }
 
-        toDosArray.splice(toDoIndex, 1);
+        TasksArray.splice(taskIndex, 1);
     }
 
-    function editChecklist(toDoIndex, checklistItemIndex, newItem) {
-        const toDosArray = getToDosArray();
+    function editChecklist(taskIndex, checklistItemIndex, newItem) {
+        const tasksArray = getTasksArray();
         
-        if (toDoIndex >= toDosArray.length || 
-            toDoIndex < 0 ||
-            !Number.isInteger(toDoIndex)) {
+        if (taskIndex >= tasksArray.length || 
+            taskIndex < 0 ||
+            !Number.isInteger(taskIndex)) {
                 console.log("Invalid value!");
                 return;
         }
 
-        const currentCompletion = Object.values(toDosArray[toDoIndex]["checklist"][checklistItemIndex])[0];
+        const currentCompletion = Object.values(tasksArray[taskIndex]["checklist"][checklistItemIndex])[0];
         const editedChecklistItem = {[newItem] : currentCompletion};
-        toDosArray[toDoIndex]["checklist"][checklistItemIndex] = editedChecklistItem;
+        tasksArray[taskIndex]["checklist"][checklistItemIndex] = editedChecklistItem;
     }
 
-    function markCompletion(toDoIndex) {
-        const toDosArray = getToDosArray();
+    function markCompletion(taskIndex) {
+        const tasksArray = getTasksArray();
 
-        if (toDoIndex >= toDosArray.length || 
-            toDoIndex < 0 ||
-            !Number.isInteger(toDoIndex)) {
+        if (taskIndex >= tasksArray.length || 
+            taskIndex < 0 ||
+            !Number.isInteger(taskIndex)) {
                 console.log("Invalid value!");
                 return;
         }
 
-        toDosArray[toDoIndex]["completed"] = !toDosArray[toDoIndex]["completed"];
+        tasksArray[taskIndex]["completed"] = !tasksArray[taskIndex]["completed"];
     }
 
     return { remove, create, edit, editChecklist, markCompletion };
 }
 
-const task = manageToDo();
+const task = manageTask();
 
 project.getStorage();
 projectDisplay();

@@ -157,6 +157,10 @@ const manageToDo = () => {
 
 const task = manageToDo();
 
+const localStorage = () => {
+    
+}
+
 projectDisplay();
 
 export { task, project };

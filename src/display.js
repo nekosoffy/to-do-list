@@ -59,6 +59,15 @@ const projectDisplay = () => {
 
             projectsContainer.appendChild(wrapper);
         })
+
+        const firstProject = select('[data-index="0"]');
+        const secondProject = select('[data-index="1"]');
+        const deleteBtn = select(".delete-btn");
+
+        if (projectsContainer.contains(secondProject) && 
+            !firstProject.contains(deleteBtn)) {
+                create("button", firstProject, "", "delete-btn", "Delete"); // Allows deleting default project after there being another one.
+        }
     }
 
     function handleSubmit() {

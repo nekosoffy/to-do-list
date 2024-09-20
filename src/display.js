@@ -49,7 +49,12 @@ const projectDisplay = () => {
             wrapper.addEventListener("click", handleBtnClick);
             create("p", wrapper, "", "", `${Object.keys(project)[0]}`);
             create("button", wrapper, "", "edit-btn", "Edit");
+            
+            if (index !== 0 || Object.keys(project)[0] !== "Default Project" || // Check if project is not the default one before adding a delete button.
+                Object.values(project)[0].length) {
             create("button", wrapper, "", "delete-btn", "Delete");
+            }
+
             projectsContainer.appendChild(wrapper);
         })
     }

@@ -1,5 +1,5 @@
 import { project, task } from "./index.js"
-import { select, selectId, selectAll, create, allowInteraction, changeInteraction } from "./project-display.js"
+import { select, selectId, create, allowInteraction, changeInteraction } from "./project-display.js"
 
 const taskDisplay = () => {
     const newTaskBtn = selectId("new-task");
@@ -9,13 +9,13 @@ const taskDisplay = () => {
     const fieldset = select("#task-form fieldset");
     const itemInput = select("#checklist-item");
     const ul = select("#task-form ul");
-
+    const tasksContainer = select("#tasks-container");
+    let currentIndex = null;
+    
     function showForm() {
-        if (allowInteraction === true) {
-            taskForm.classList.remove("hidden");
-            newTaskBtn.classList.add("hidden");
-            changeInteraction();
-        }
+        taskForm.classList.remove("hidden");
+        newTaskBtn.classList.add("hidden");
+        changeInteraction();
     }
 
     function hideForm() {
@@ -28,6 +28,35 @@ const taskDisplay = () => {
             ul.replaceChildren();
             deleteAllBtnSelector.remove();
         }
+    }
+
+    function handleClick(event) {
+        const button = event.target;
+        currentIndex = parseInt(button.closest("[data-index]").dataset.index);
+        if (button.classList.contains("delete-btn")) {
+            task.remove(currentIndex);
+            updateTasks();
+        }
+    }
+
+    function updateTasks() {
+        tasksContainer.replaceChildren();
+        tasksContainer.appendChild(taskForm);
+    
+        const tasks = Object.values(project.getProjectList()[project.getSelectedProject()])[0];
+        
+        tasks.forEach((task, index) => {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("task-wrapper");
+            wrapper.setAttribute("data-index", index);
+            wrapper.addEventListener("click", handleClick);
+            create("p", wrapper, "", "", `${task[0].title}`);
+            create("button", wrapper, "", "edit-btn", "Edit");
+            create("button", wrapper, "", "delete-btn", "Delete");
+            tasksContainer.appendChild(wrapper);
+        });
+
+        project.populateStorage();
     }
        
     function handleNewChecklistItem() {
@@ -59,40 +88,15 @@ const taskDisplay = () => {
         }
     }
 
-    function handleChecklistBtnClick(event) {
-        const fieldset = select("#task-form fieldset");
-        const button = event.target;
-        const li = select("#task-form li");
-        
-        if (button.id === "delete-checklist") {
-            ul.replaceChildren();
-        }
-
-        if (button.id === "checklist-item-delete") {
-            button.closest("li").remove();
-        }
-
-        if (button.id === "checklist-item-edit") {
-            const itemInput = document.createElement("input");
-            const confirm = document.createElement("button");
-            const cancel = document.createElement("button");
-
-            itemInput.required = true;
-            itemInput.setAttribute("type", "text");
-            itemInput.id = "checklist-item";
-            button.closest("li").replaceChildren();
-        }
-    }
-
     function handleSubmit(event) {
         event.preventDefault();
-
-        const inputs = taskForm.querySelectorAll("input", "select", "textarea"); // Getting the form values, except for priority and checklist.
-        const checklistItems = fieldset.querySelectorAll("span");
-        const checklistValues = Array.from(checklistItems).map(input => input.textContent);
-        const inputValues = Array.from(inputs).map(input => input.value);
+        const inputs = taskForm.querySelectorAll("input", "select", "textarea"); // Getting the form values.
         const sel = document.querySelector("select");
         const selectedOption = sel.options[sel.selectedIndex].text;
+        const checklistItems = fieldset.querySelectorAll("span");
+
+        const inputValues = Array.from(inputs).map(input => input.value);
+        const checklistValues = Array.from(checklistItems).map(input => input.textContent);
 
         inputValues.pop(); // Removing the residual value of the form's checklist text input.
         inputValues.splice(3, 0, selectedOption); // Inserting the priority after getting it.
@@ -100,16 +104,18 @@ const taskDisplay = () => {
         for (const el of checklistValues) {
             inputValues.push(el); // Placing each checklist item along with the other values.
         }
-        
+
         hideForm();
         task.create(...inputValues);
+        updateTasks();
     }
 
     taskForm.addEventListener("submit", handleSubmit);
     newTaskBtn.addEventListener("click", showForm);
     cancelBtn.addEventListener("click", hideForm);
     checklistConfirmBtn.addEventListener("click", handleNewChecklistItem);
-    fieldset.addEventListener("click", handleChecklistBtnClick);
+
+    return { updateTasks };
 }
 
 export { taskDisplay };

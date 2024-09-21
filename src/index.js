@@ -165,13 +165,14 @@ const manageTask = () => {
         tasksArray[taskIndex]["completed"] = !tasksArray[taskIndex]["completed"];
     }
 
-    return { remove, create, edit, editChecklist, markCompletion };
+    return { remove, create, edit, editChecklist, markCompletion, getTasksArray };
 }
 
 const task = manageTask();
 
 project.getStorage();
 projectDisplay();
-taskDisplay();
+const taskDisplayInstance = taskDisplay();
+taskDisplayInstance.updateTasks();
 
-export { task, project };
+export { task, project, taskDisplayInstance };

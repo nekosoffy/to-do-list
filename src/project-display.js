@@ -1,9 +1,8 @@
-import { project } from "./index.js";
+import { project, taskDisplayInstance } from "./index.js";
 
 // Helper functions
 const select = (target) => document.querySelector(target);
 const selectId = (target) => document.getElementById(target);
-const selectAll = (target) => document.querySelectorAll(target);
 
 function create(name, parent, id, htmlClass, text) {
     const element = document.createElement(name);
@@ -39,7 +38,6 @@ const projectDisplay = () => {
     const label = select("[for=project-title]");
     const projectTitle = selectId("project-title");
     const projectsContainer = selectId("projects-container");
-    const wrapper = select(".project-wrapper");
     let editMode = false;
     let currentIndex = null;
 
@@ -108,27 +106,28 @@ const projectDisplay = () => {
     }
 
     function handleClick(event) {
-        const button = event.target;
-        currentIndex = parseInt(button.closest("[data-index]").dataset.index);
-        if (button.classList.contains("edit-btn") && allowInteraction === true) {
+        const target = event.target;
+        currentIndex = parseInt(target.closest("[data-index]").dataset.index);
+        if (target.classList.contains("edit-btn") && allowInteraction === true) {
             label.textContent = "New title:";
             const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
             projectTitle.value = currentTitle; // Set the input's content to default to the current title when editing.
             showForm();
             editMode = true;
-        } else if (button.classList.contains("delete-btn")) {
+        } else if (target.classList.contains("delete-btn")) {
             project.remove(currentIndex);
             updateProjects();
-        } else if (allowInteraction === true) {
+        } else if (allowInteraction) {
             project.select(currentIndex);
+            taskDisplayInstance.updateTasks();
         }
     }
+
+    updateProjects();
 
     newProjectBtn.addEventListener("click", showForm);
     projectForm.addEventListener("submit", handleSubmit);
     cancelBtn.addEventListener("click", hideForm);
-
-    updateProjects();
 }
 
-export { projectDisplay, select, selectId, selectAll, create, changeInteraction, allowInteraction };
+export { projectDisplay, select, selectId, create, changeInteraction, allowInteraction };

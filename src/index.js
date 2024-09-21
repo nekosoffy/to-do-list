@@ -1,6 +1,7 @@
 import "./reset.css";
 import "./styles.css";
-import { projectDisplay } from "./display.js";
+import { projectDisplay } from "./project-display.js";
+import { taskDisplay } from "./task-display.js";
 
 const manageProject = () => {
     let projectList = [{ "Default Project": [] }];
@@ -171,5 +172,6 @@ const task = manageTask();
 
 project.getStorage();
 projectDisplay();
+taskDisplay();
 
 export { task, project };

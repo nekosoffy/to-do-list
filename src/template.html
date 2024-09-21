@@ -9,7 +9,7 @@
     <main>
         <div>
             <h1>Your projects</h1>
-            <div id="projects-container"></div>
+            <div id="projects-container">
                 <form id="project-form" class="hidden">
                     <div class="input-wrapper">
                         <label for="project-title">Name your project:</label>
@@ -20,6 +20,46 @@
                 </form>
             </div>
             <button type="button" id="new-project">New Project</button>
+        </div>
+        <div>
+            <h2></h2>
+            <div id="tasks-container">
+                <form id="task-form" class="hidden">
+                    <div class="input-wrapper">
+                        <label for="task-title">Subject:</label>
+                        <input type="text" id="task-title" maxlength="70" required />
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="task-description">Description:</label>
+                        <input type="textarea" id="task-description" maxlength="150" />
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="task-date">Due Date:</label>
+                        <input type="date" id="task-date" />
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="task-priority">Priority:</label>
+                        <select id="task-priority">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="task-notes">Notes:</label>
+                        <input type="textarea" id="task-notes" />
+                    </div>
+                    <fieldset>
+                        <legend>Add a checklist item</legend>
+                        <input type="text" id="checklist-item" />
+                        <button type="button" id="new-checklist">Confirm</button>
+                        <ul></ul>
+                    </fieldset>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="confirm-btn">Confirm</button>
+                </form>
+            </div>
+            <button type="button" id="new-task">New Task</button>
         </div>
     </main>
 </body>

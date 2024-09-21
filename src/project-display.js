@@ -1,4 +1,4 @@
-import { task, project } from "./index.js";
+import { project } from "./index.js";
 
 // Helper functions
 const select = (target) => document.querySelector(target);
@@ -29,10 +29,13 @@ function create(name, parent, id, htmlClass, text) {
 }
 //
 
+let allowInteraction = true;
+const changeInteraction = () => !allowInteraction;
+
 const projectDisplay = () => {
     const newProjectBtn = selectId("new-project");
     const projectForm = selectId("project-form");
-    const cancelBtn = select(".cancel-btn");
+    const cancelBtn = select("#project-form .cancel-btn");
     const label = select("[for=project-title]");
     const projectTitle = selectId("project-title");
     const projectsContainer = selectId("projects-container");
@@ -42,6 +45,7 @@ const projectDisplay = () => {
 
     function updateProjects() {
         projectsContainer.replaceChildren();
+        projectsContainer.appendChild(projectForm);
         project.getProjectList().forEach((project, index) => {
             const wrapper = document.createElement("div");
             wrapper.classList.add("project-wrapper");
@@ -71,9 +75,12 @@ const projectDisplay = () => {
         project.populateStorage();
     }
 
-    function showForm () {
-        projectForm.classList.remove("hidden");
-        newProjectBtn.classList.add("hidden");
+    function showForm() {
+        if (allowInteraction === true) {
+            projectForm.classList.remove("hidden");
+            newProjectBtn.classList.add("hidden");
+            allowInteraction = false;
+        }
     }
 
     function hideForm () {
@@ -83,6 +90,7 @@ const projectDisplay = () => {
         label.textContent = "Name your project:";
         editMode = false;
         currentIndex = null;
+        allowInteraction = true;
     }
 
     function handleSubmit(event) {
@@ -102,7 +110,7 @@ const projectDisplay = () => {
     function handleClick(event) {
         const button = event.target;
         currentIndex = parseInt(button.closest("[data-index]").dataset.index);
-        if (button.classList.contains("edit-btn")) {
+        if (button.classList.contains("edit-btn") && allowInteraction === true) {
             label.textContent = "New title:";
             const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
             projectTitle.value = currentTitle; // Set the input's content to default to the current title when editing.
@@ -111,19 +119,16 @@ const projectDisplay = () => {
         } else if (button.classList.contains("delete-btn")) {
             project.remove(currentIndex);
             updateProjects();
-        } else if (projectForm.classList.contains("hidden")) {
+        } else if (allowInteraction === true) {
             project.select(currentIndex);
         }
     }
 
     newProjectBtn.addEventListener("click", showForm);
     projectForm.addEventListener("submit", handleSubmit);
-    
-    cancelBtn.addEventListener("click", () => {
-        hideForm();
-    });
+    cancelBtn.addEventListener("click", hideForm);
 
     updateProjects();
 }
 
-export { projectDisplay };
+export { projectDisplay, select, selectId, selectAll, create, changeInteraction, allowInteraction };

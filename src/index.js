@@ -92,14 +92,14 @@ const manageTask = () => {
         });
 
         const list = [
-            {title}, 
-            {description}, 
-            {dueDate}, 
-            {priority}, 
-            {notes}, 
-            {checklist: formattedChecklist},
-            {completed: false}
-        ]
+            { "Title:": title },
+            { "Description:": description },
+            { "Due Date:": dueDate },
+            { "Priority:": priority },
+            { "Notes:": notes },
+            { "Checklist:": checklist },
+            { "Completed:": false }
+        ];
 
         tasksArray.push(list);
     }

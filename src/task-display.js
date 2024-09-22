@@ -47,10 +47,45 @@ const taskDisplay = () => {
         
         tasks.forEach((task, index) => {
             const wrapper = document.createElement("div");
+            const ul = document.createElement("ul");
+            const newFieldset = document.createElement("fieldset");
+            const checklistUl = document.createElement("ul");
+            
             wrapper.classList.add("task-wrapper");
             wrapper.setAttribute("data-index", index);
             wrapper.addEventListener("click", handleClick);
-            create("p", wrapper, "", "", `${task[0].title}`);
+
+            const firstElements = ["Title:", "Description:", "Due Date:", "Notes:", "Priority:"]; 
+
+            for (let element of task) {
+                if (firstElements.includes(Object.keys(element)[0]) && 
+                Object.values(element)[0] !== "") {
+                    
+                    const li = document.createElement("li");
+                    create("span", li, "", "item-title", Object.keys(element)[0]);
+                    create("span", li, "", "item-value", ` ${Object.values(element)[0]}`);
+                    ul.appendChild(li);
+
+                } else if (
+                    Object.keys(element)[0] === "Checklist:" &&
+                    Object.values(element)[0].length) {
+                    
+                        create("legend", newFieldset, "checklist-title", "", "Checklist");
+
+                    for (let item of Object.values(element)[0]) {
+                        
+                        const li = document.createElement("li");
+                        create("button", li, "", "checklist-status");
+                        create("span", li, "", "checklist-item", Object.keys(item)[0]);
+                        checklistUl.appendChild(li);
+                    }
+                }
+            }    
+
+            wrapper.appendChild(ul);
+            newFieldset.appendChild(checklistUl);
+            wrapper.appendChild(newFieldset);
+        
             create("button", wrapper, "", "edit-btn", "Edit");
             create("button", wrapper, "", "delete-btn", "Delete");
             tasksContainer.appendChild(wrapper);

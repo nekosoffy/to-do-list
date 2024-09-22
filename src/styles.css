@@ -1,3 +1,7 @@
 .hidden {
     display: none;
 }
+
+ul, li {
+    padding: 0;
+}

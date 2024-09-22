@@ -19,7 +19,6 @@
     --project-button-font-size: 1.3rem;
 }
 
-
 body {
     font-family: 'open_sansregular', sans-serif;
     background-color: var(--background-color);
@@ -98,6 +97,10 @@ main {
     color: var(--font-color);
 }
 
+.project-wrapper:hover {
+    filter: brightness(110%);
+}
+
 .button-wrapper {
     display: flex;
     gap: 7px;
@@ -114,10 +117,12 @@ main {
 
 .edit-btn:hover {
     filter: brightness(115%);
+    transform: scale(0.95);
 }
 
 .delete-btn:hover {
-    filter: brightness(125%);
+    filter: brightness(120%);
+    transform: scale(0.95);
 }
 
 .project-wrapper, .edit-btn, .delete-btn {
@@ -125,7 +130,7 @@ main {
 }
 
 .edit-btn {
-    background-color: var(--green-button-color);
+    background-color: var(--secondary-color);
 }
 
 .delete-btn {

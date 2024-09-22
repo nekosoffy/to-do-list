@@ -166,7 +166,6 @@ const projectDisplay = () => {
         }
     }
 
-
     function showProjectTitle(index) {
         const h2 = select("h2");
         h2.textContent = Object.keys(project.getProjectList()[index])[0];

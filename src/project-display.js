@@ -34,10 +34,10 @@ const changeInteraction = () => allowInteraction = !allowInteraction;
 
 const projectDisplay = () => {
     const newProjectBtn = selectId("new-project");
-    const projectForm = selectId("project-form");
-    const formInput = select("#project-form input");
-    const cancelBtn = select("#project-form .cancel-btn");
+    const projectForm = select(".project-form");
+    const formInput = select(".project-form input");
     const label = select("[for=project-title]");
+    const cancelBtn = select(".project-form .cancel-btn");
     const projectTitle = selectId("project-title");
     const projectsContainer = selectId("projects-container");
     let editMode = false;
@@ -49,17 +49,24 @@ const projectDisplay = () => {
         project.getProjectList().forEach((project, index) => {
             const wrapper = document.createElement("div");
             const buttonWrapper = document.createElement("div");
+
             wrapper.classList.add("project-wrapper");
-            buttonWrapper.classList.add("button-wrapper");
             wrapper.setAttribute("data-index", index);
             wrapper.addEventListener("click", handleClick);
+            wrapper.addEventListener("mouseenter", showButtons);
+            wrapper.addEventListener("mouseleave", hideButtons);
+
+            buttonWrapper.classList.add("button-wrapper");
+
             create("p", wrapper, "", "project-title", `${Object.keys(project)[0]}`);
-            create("button", buttonWrapper, "", "edit-btn", "Edit");
+            const editBtn = create("button", buttonWrapper, "", "edit-btn", "Edit");
+            editBtn.classList.add("hidden");
             
             if (index !== 0 ||
                 Object.values(project)[0].length ||
                 Object.keys(project)[0] !== "Default Project") { 
-                    create("button", buttonWrapper, "", "delete-btn", "Delete"); // Check if project is not the default one before adding a delete button.
+                const deleteBtn = create("button", buttonWrapper, "", "delete-btn", "Delete"); // Check if project is not the default one before adding a delete button.
+                deleteBtn.classList.add("hidden");
             }
 
             wrapper.appendChild(buttonWrapper);
@@ -79,25 +86,24 @@ const projectDisplay = () => {
         project.populateStorage();
     }
 
-    function hideButtons() {
-        const editBtn = selectAll(".project-wrapper .edit-btn");
-        const deleteBtn = selectAll(".project-wrapper .delete-btn");
-        editBtn.forEach(el => el.classList.add("hidden"));
-        deleteBtn.forEach(el => el.classList.add("hidden"));
-        newProjectBtn.classList.add("hidden");
+    function hideButtons(event) {
+        const target = event.target;
+        const currentWrapper = target.closest("[data-index]");
+        const buttons = currentWrapper.querySelectorAll("button");
+        buttons.forEach(el => el.classList.add("hidden"));
     }
 
-    function showButtons() {
-        const editBtn = selectAll(".project-wrapper .edit-btn");
-        const deleteBtn = selectAll(".project-wrapper .delete-btn");
-        editBtn.forEach(el => el.classList.remove("hidden"));
-        deleteBtn.forEach(el => el.classList.remove("hidden"));
-        newProjectBtn.classList.remove("hidden");
+    function showButtons(event) {
+        const target = event.target;
+        const currentWrapper = target.closest("[data-index]");
+        const buttons = currentWrapper.querySelectorAll("button");
+        buttons.forEach(el => el.classList.remove("hidden"));
     }
 
     function showForm() {
         if (allowInteraction) {
-            hideButtons();
+            projectsContainer.scrollTo(0, 0);
+            newProjectBtn.classList.add("hidden");
             projectForm.classList.remove("hidden");
             formInput.focus();
             allowInteraction = false;
@@ -105,13 +111,14 @@ const projectDisplay = () => {
     }
 
     function hideForm () {
-        showButtons();
-        projectForm.classList.add("hidden");
+        newProjectBtn.classList.remove("hidden");
         projectForm.reset();
+        projectForm.classList.add("hidden");
         label.textContent = "Name your project:";
         editMode = false;
         currentIndex = null;
         allowInteraction = true;
+        updateProjects();
     }
 
     function handleSubmit(event) {
@@ -119,6 +126,7 @@ const projectDisplay = () => {
             event.preventDefault();
             project.create(projectTitle.value);
             hideForm();
+            projectForm.classList.add("hidden");
             updateProjects();
         } else {
             event.preventDefault();
@@ -132,11 +140,21 @@ const projectDisplay = () => {
         const target = event.target;
         currentIndex = parseInt(target.closest("[data-index]").dataset.index);
         if (target.classList.contains("edit-btn") && allowInteraction) {
-            projectsContainer.scrollTo(0, 0);
-            label.textContent = "New title:";
+            allowInteraction = false;
+            const editForm = projectForm.cloneNode(true);
+            projectsContainer.appendChild(editForm);
+            editForm.addEventListener("submit", handleSubmit);
+            const newLabel = selectAll("[for=project-title]");
+            newLabel.forEach(el => el.textContent = "New title:");
             const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
+            const currentProject = target.closest(".project-wrapper");
             projectTitle.value = currentTitle; // Set the input's content to default to the current title when editing.
-            showForm();
+            editForm.classList.remove("hidden");
+            currentProject.replaceWith(editForm);
+
+            const newCancelBtn = selectAll(".project-form .cancel-btn");
+            newCancelBtn[1].addEventListener("click", hideForm);
+
             editMode = true;
         } else if (target.classList.contains("delete-btn") && allowInteraction) {
             project.remove(currentIndex);
@@ -147,6 +165,7 @@ const projectDisplay = () => {
             showProjectTitle(currentIndex);
         }
     }
+
 
     function showProjectTitle(index) {
         const h2 = select("h2");

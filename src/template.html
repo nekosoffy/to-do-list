@@ -8,11 +8,11 @@
 <body>
     <main>
         <div class="container">
-            <div>
+            <div class="top-wrapper">
                 <h1>Your projects</h1>
                 <button type="button" id="new-project">New Project</button>
             </div>
-            <div id="projects-container">
+            <div id="projects-container" class="inner-container">
                 <form id="project-form" class="hidden">
                     <div class="input-wrapper">
                         <label for="project-title">Name your project:</label>
@@ -25,8 +25,11 @@
             
         </div>
         <div class="container">
-            <h2></h2>
-            <div id="tasks-container">
+            <div class="top-wrapper">
+                <h2></h2>
+                <button type="button" id="new-task">New Task</button>
+            </div>
+            <div id="tasks-container" class="inner-container">
                 <form id="task-form" class="hidden">
                     <div class="input-wrapper">
                         <label for="task-title">Subject:</label>
@@ -62,7 +65,6 @@
                     <button type="submit" class="confirm-btn">Confirm</button>
                 </form>
             </div>
-            <button type="button" id="new-task">New Task</button>
         </div>
     </main>
 </body>

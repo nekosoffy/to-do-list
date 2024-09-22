@@ -2,6 +2,7 @@ import { project, taskDisplayInstance } from "./index.js";
 
 // Helper functions
 const select = (target) => document.querySelector(target);
+const selectAll = (target) => document.querySelectorAll(target);
 const selectId = (target) => document.getElementById(target);
 
 function create(name, parent, id, htmlClass, text) {
@@ -29,11 +30,12 @@ function create(name, parent, id, htmlClass, text) {
 //
 
 let allowInteraction = true;
-const changeInteraction = () => !allowInteraction;
+const changeInteraction = () => allowInteraction = !allowInteraction;
 
 const projectDisplay = () => {
     const newProjectBtn = selectId("new-project");
     const projectForm = selectId("project-form");
+    const formInput = select("#project-form input");
     const cancelBtn = select("#project-form .cancel-btn");
     const label = select("[for=project-title]");
     const projectTitle = selectId("project-title");
@@ -73,17 +75,34 @@ const projectDisplay = () => {
         project.populateStorage();
     }
 
+    function hideButtons() {
+        const editBtn = selectAll(".project-wrapper .edit-btn");
+        const deleteBtn = selectAll(".project-wrapper .delete-btn");
+        editBtn.forEach(el => el.classList.add("hidden"));
+        deleteBtn.forEach(el => el.classList.add("hidden"));
+        newProjectBtn.classList.add("hidden");
+    }
+
+    function showButtons() {
+        const editBtn = selectAll(".project-wrapper .edit-btn");
+        const deleteBtn = selectAll(".project-wrapper .delete-btn");
+        editBtn.forEach(el => el.classList.remove("hidden"));
+        deleteBtn.forEach(el => el.classList.remove("hidden"));
+        newProjectBtn.classList.remove("hidden");
+    }
+
     function showForm() {
-        if (allowInteraction === true) {
+        if (allowInteraction) {
+            hideButtons();
             projectForm.classList.remove("hidden");
-            newProjectBtn.classList.add("hidden");
+            formInput.focus();
             allowInteraction = false;
         }
     }
 
     function hideForm () {
+        showButtons();
         projectForm.classList.add("hidden");
-        newProjectBtn.classList.remove("hidden");
         projectForm.reset();
         label.textContent = "Name your project:";
         editMode = false;
@@ -108,13 +127,14 @@ const projectDisplay = () => {
     function handleClick(event) {
         const target = event.target;
         currentIndex = parseInt(target.closest("[data-index]").dataset.index);
-        if (target.classList.contains("edit-btn") && allowInteraction === true) {
+        if (target.classList.contains("edit-btn") && allowInteraction) {
+            projectsContainer.scrollTo(0, 0);
             label.textContent = "New title:";
             const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
             projectTitle.value = currentTitle; // Set the input's content to default to the current title when editing.
             showForm();
             editMode = true;
-        } else if (target.classList.contains("delete-btn")) {
+        } else if (target.classList.contains("delete-btn") && allowInteraction) {
             project.remove(currentIndex);
             updateProjects();
         } else if (allowInteraction) {
@@ -133,7 +153,7 @@ const projectDisplay = () => {
     projectForm.addEventListener("submit", handleSubmit);
     cancelBtn.addEventListener("click", hideForm);
 
-    return { showProjectTitle, updateProjects };
+    return { showProjectTitle, updateProjects, allowInteraction };
 }
 
-export { projectDisplay, select, selectId, create, changeInteraction, allowInteraction };
+export { projectDisplay, select, selectId, create, allowInteraction, changeInteraction };

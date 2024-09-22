@@ -177,5 +177,4 @@ ProjectDisplayInstance.updateProjects();
 ProjectDisplayInstance.showProjectTitle(0);
 taskDisplayInstance.updateTasks();
 
-
 export { task, project, taskDisplayInstance };

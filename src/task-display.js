@@ -13,9 +13,12 @@ const taskDisplay = () => {
     let currentIndex = null;
     
     function showForm() {
-        taskForm.classList.remove("hidden");
-        newTaskBtn.classList.add("hidden");
-        changeInteraction();
+        if (allowInteraction){
+            taskForm.classList.remove("hidden");
+            newTaskBtn.classList.add("hidden");
+            changeInteraction();
+        }
+        
     }
 
     function hideForm() {

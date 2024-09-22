@@ -160,6 +160,9 @@ const projectDisplay = () => {
             project.remove(currentIndex);
             updateProjects();
         } else if (allowInteraction) {
+            const wrappers = projectsContainer.childNodes;
+            wrappers.forEach(el => el.classList.remove("selected"));
+            (target.closest("[data-index]")).classList.add("selected");
             project.select(currentIndex);
             taskDisplayInstance.updateTasks();
             showProjectTitle(currentIndex);

@@ -97,8 +97,12 @@ main {
     color: var(--font-color);
 }
 
-.project-wrapper:hover {
-    filter: brightness(110%);
+.project-wrapper:not(.selected):hover {
+    filter: brightness(120%);
+}
+
+.selected {
+    filter: brightness(120%);
 }
 
 .button-wrapper {
@@ -116,12 +120,12 @@ main {
 }
 
 .edit-btn:hover {
-    filter: brightness(115%);
+    filter: brightness(105%);
     transform: scale(0.95);
 }
 
 .delete-btn:hover {
-    filter: brightness(120%);
+    filter: brightness(110%);
     transform: scale(0.95);
 }
 

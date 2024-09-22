@@ -175,6 +175,7 @@ const ProjectDisplayInstance = projectDisplay();
 const taskDisplayInstance = taskDisplay();
 ProjectDisplayInstance.updateProjects();
 ProjectDisplayInstance.showProjectTitle(0);
+ProjectDisplayInstance.highlightDefaultProject();
 taskDisplayInstance.updateTasks();
 
 export { task, project, taskDisplayInstance };

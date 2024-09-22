@@ -92,7 +92,6 @@ const taskDisplay = () => {
                 newFieldset.appendChild(checklistUl);
                 wrapper.appendChild(newFieldset);
             }
-            
         
             create("button", wrapper, "", "edit-btn", "Edit");
             create("button", wrapper, "", "delete-btn", "Delete");

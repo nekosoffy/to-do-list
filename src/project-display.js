@@ -161,8 +161,8 @@ const projectDisplay = () => {
             updateProjects();
         } else if (allowInteraction) {
             const wrappers = projectsContainer.childNodes;
-            wrappers.forEach(el => el.classList.remove("selected"));
-            (target.closest("[data-index]")).classList.add("selected");
+            wrappers.forEach(el => el.removeAttribute("id"));
+            (target.closest("[data-index]")).id = "selected-project";
             project.select(currentIndex);
             taskDisplayInstance.updateTasks();
             showProjectTitle(currentIndex);
@@ -174,11 +174,17 @@ const projectDisplay = () => {
         h2.textContent = Object.keys(project.getProjectList()[index])[0];
     }
 
+    function highlightDefaultProject() {
+        const wrappers = projectsContainer.childNodes;
+        console.log(wrappers);
+        wrappers[1].id = "selected-project";
+    }
+
     newProjectBtn.addEventListener("click", showForm);
     projectForm.addEventListener("submit", handleSubmit);
     cancelBtn.addEventListener("click", hideForm);
 
-    return { showProjectTitle, updateProjects, allowInteraction };
+    return { showProjectTitle, updateProjects, allowInteraction, highlightDefaultProject };
 }
 
 export { projectDisplay, select, selectId, create, allowInteraction, changeInteraction };

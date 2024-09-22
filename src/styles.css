@@ -8,6 +8,8 @@
 :root {
     --background-color: rgb(88, 95, 105);
     --container-color: rgb(48, 54, 66);
+    --hover-color: rgb(85, 94, 109);
+    --selected-color: rgb(89, 140, 185);
     --project-color: rgb(61, 69, 82);
     --font-color: rgb(241, 242, 244);
     --secondary-color: rgb(249, 170, 77);
@@ -97,12 +99,12 @@ main {
     color: var(--font-color);
 }
 
-.project-wrapper:not(.selected):hover {
-    filter: brightness(120%);
+.project-wrapper:not(.selected-project):hover {
+    background-color: var(--hover-color);
 }
 
-.selected {
-    filter: brightness(120%);
+#selected-project {
+    background-color: var(--selected-color);
 }
 
 .button-wrapper {
@@ -120,12 +122,12 @@ main {
 }
 
 .edit-btn:hover {
-    filter: brightness(105%);
+    filter: brightness(115%);
     transform: scale(0.95);
 }
 
 .delete-btn:hover {
-    filter: brightness(110%);
+    filter: brightness(120%);
     transform: scale(0.95);
 }
 

@@ -128,6 +128,25 @@ const taskDisplay = () => {
         }
     }
 
+    function handleChecklistBtnClick(event) {
+        const button = event.target;
+        const deleteAllBtn = selectId("delete-checklist");
+        const li = select("#task-form li");
+    
+        if (button.id === "delete-checklist") {
+            ul.replaceChildren();
+            deleteAllBtn.remove();
+        }
+        if (button.id === "checklist-item-delete") {
+            button.closest("li").remove();
+            
+            if (!fieldset.contains(li)) {
+                ul.replaceChildren();
+                deleteAllBtn.remove();
+            }
+        }
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
         const inputs = taskForm.querySelectorAll("input", "select", "textarea"); // Getting the form values.
@@ -149,7 +168,8 @@ const taskDisplay = () => {
         task.create(...inputValues);
         updateTasks();
     }
-
+    
+    fieldset.addEventListener("click", handleChecklistBtnClick);
     taskForm.addEventListener("submit", handleSubmit);
     newTaskBtn.addEventListener("click", showForm);
     cancelBtn.addEventListener("click", hideForm);

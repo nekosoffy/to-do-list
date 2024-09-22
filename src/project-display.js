@@ -162,8 +162,14 @@ const projectDisplay = () => {
 
             editMode = true;
         } else if (target.classList.contains("delete-btn") && allowInteraction) {
+            const wrapper = target.closest(".project-wrapper");
+            console.log(wrapper);
+            fadeOut(wrapper);
             project.remove(currentIndex);
-            updateProjects();
+            updateProjects();  
+            taskDisplayInstance.updateTasks();
+            highlightProject();
+            showProjectTitle(project.getSelectedProject());
         } else if (allowInteraction) {
             highlightProject();
             project.select(currentIndex);
@@ -182,6 +188,18 @@ const projectDisplay = () => {
         wrappers.forEach(el => el.removeAttribute("id"));
         const index = project.getSelectedProject() + 1;
         wrappers[index].id = "selected-project";
+    }
+
+    function fadeOut(target) {
+        let opacity = 1;
+        let interval = setInterval(function () {
+            if (opacity > 0) {
+                opacity -= 0.1;
+                target.style.opacity = opacity;
+            } else {
+                clearInterval(interval);
+            }
+        }, 1100);
     }
 
     newProjectBtn.addEventListener("click", showForm);

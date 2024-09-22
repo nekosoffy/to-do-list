@@ -37,13 +37,16 @@ const manageProject = () => {
 
         if (selectedProject > projectIndex ||
             selectedProject === projectIndex && 
-            selectedProject > projectList.length-1) {
+            selectedProject >= projectList.length) {
             selectedProject -= 1;
         }
 
         if (!projectList.length) {
             projectList.push({ "Default Project": [] }); // To always make sure there's the default project.
+            selectedProject = 0;
         }
+
+        console.log(selectedProject);
     }
 
     function select(projectIndex) {

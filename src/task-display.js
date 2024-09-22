@@ -45,7 +45,7 @@ const taskDisplay = () => {
     function updateTasks() {
         tasksContainer.replaceChildren();
         tasksContainer.appendChild(taskForm);
-    
+
         const tasks = Object.values(project.getProjectList()[project.getSelectedProject()])[0];
         
         tasks.forEach((task, index) => {

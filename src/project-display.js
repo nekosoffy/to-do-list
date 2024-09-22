@@ -38,7 +38,6 @@ const projectDisplay = () => {
     const formInput = select(".project-form input");
     const label = select("[for=project-title]");
     const cancelBtn = select(".project-form .cancel-btn");
-    const projectTitle = selectId("project-title");
     const projectsContainer = selectId("projects-container");
     let editMode = false;
     let currentIndex = null;
@@ -150,10 +149,11 @@ const projectDisplay = () => {
             projectsContainer.appendChild(editForm);
             editForm.addEventListener("submit", handleSubmit);
             const newLabel = selectAll("[for=project-title]");
+            const projectTitle = selectAll("#project-title");
             newLabel.forEach(el => el.textContent = "New title:");
             const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
             const currentProject = target.closest(".project-wrapper");
-            projectTitle.value = currentTitle; // Set the input's content to default to the current title when editing.
+            projectTitle.forEach(el => el.value = currentTitle); // Set the input's content to default to the current title when editing.
             editForm.classList.remove("hidden");
             currentProject.replaceWith(editForm);
 

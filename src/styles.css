@@ -12,11 +12,10 @@
     --selected-color: rgb(89, 140, 185);
     --project-color: rgb(61, 69, 82);
     --font-color: rgb(241, 242, 244);
-    --secondary-color: rgb(249, 170, 77);
-    --red-button-color: rgb(255, 116, 97);
-    --dark-red-button-color: rgb(219, 99, 83);
+    --secondary-color: rgb(228, 156, 75);
+    --red-button-color: rgb(236, 112, 96);
     --green-button-color: rgb(179, 209, 157);
-    --dark-green-button-color: rgb(152, 190, 125);
+    --new-button-color: rgb(127, 113, 196);
 
     --project-button-font-size: 1.3rem;
 }
@@ -61,6 +60,7 @@ main {
 .top-wrapper {
     display: flex;
     justify-content: space-between;
+    margin-right: 5px;
 }
 
 h1 {
@@ -104,7 +104,7 @@ h1 {
     color: var(--font-color);
 }
 
-.project-wrapper:not(.selected-project):hover {
+.hovered:not(.selected-project) {
     background-color: var(--hover-color);
 }
 
@@ -117,13 +117,21 @@ h1 {
     gap: 7px;
 }
 
-.edit-btn, .delete-btn {
+button {
     border: none;
-    border-radius: 10px;
     font-weight: bold;
-    font-size: var(--project-button-font-size);
-    transition: all 0.3 ease;
     text-align: center;
+    transition: all 0.3 ease;
+    color: var(--font-color);
+}
+
+button, .project-wrapper {
+    cursor: pointer;
+}
+
+.edit-btn, .delete-btn {
+    border-radius: 5px;
+    font-size: var(--project-button-font-size);
 }
 
 .edit-btn:hover {
@@ -134,10 +142,6 @@ h1 {
 .delete-btn:hover {
     filter: brightness(120%);
     transform: scale(0.95);
-}
-
-.project-wrapper, .edit-btn, .delete-btn {
-    cursor: pointer;
 }
 
 .edit-btn {
@@ -155,4 +159,15 @@ h1 {
 
 fieldset {
     width: max-content;
+}
+
+#new-project {
+    background-color: var(--new-button-color);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#new-project:hover {
+    filter: brightness(120%);
+    transform: scale(0.95);
 }

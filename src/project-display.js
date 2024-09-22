@@ -99,13 +99,17 @@ const projectDisplay = () => {
         const currentWrapper = target.closest("[data-index]");
         const buttons = currentWrapper.querySelectorAll("button");
         buttons.forEach(el => el.classList.add("hidden"));
+        currentWrapper.classList.remove("hovered");
     }
 
     function showButtons(event) {
-        const target = event.target;
-        const currentWrapper = target.closest("[data-index]");
-        const buttons = currentWrapper.querySelectorAll("button");
-        buttons.forEach(el => el.classList.remove("hidden"));
+        if (allowInteraction) {
+            const target = event.target;
+            const currentWrapper = target.closest("[data-index]");
+            const buttons = currentWrapper.querySelectorAll("button");
+            buttons.forEach(el => el.classList.remove("hidden"));
+            currentWrapper.classList.add("hovered");
+        }
     }
 
     function showForm() {
@@ -194,10 +198,12 @@ const projectDisplay = () => {
     }
 
     function highlightProject() {
-        const wrappers = projectsContainer.childNodes;
-        wrappers.forEach(el => el.removeAttribute("id"));
-        const index = project.getSelectedProject() + 1;
-        wrappers[index].id = "selected-project";
+        if (allowInteraction){
+            const wrappers = projectsContainer.childNodes;
+            wrappers.forEach(el => el.removeAttribute("id"));
+            const index = project.getSelectedProject() + 1;
+            wrappers[index].id = "selected-project";
+        }
     }
 
     function fadeOut(target) {

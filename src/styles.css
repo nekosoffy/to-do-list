@@ -10,7 +10,13 @@
     --container-color: rgb(48, 54, 66);
     --project-color: rgb(61, 69, 82);
     --font-color: rgb(241, 242, 244);
-    --secondary-color: rgb(255, 116, 97);
+    --secondary-color: rgb(249, 170, 77);
+    --red-button-color: rgb(255, 116, 97);
+    --dark-red-button-color: rgb(219, 99, 83);
+    --green-button-color: rgb(179, 209, 157);
+    --dark-green-button-color: rgb(152, 190, 125);
+
+    --project-button-font-size: 1.3rem;
 }
 
 
@@ -41,10 +47,6 @@ main {
     border-radius: 10px;
 }
 
-.project-wrapper {
-    padding: 10px;
-}
-
 .container {
     display: flex;
     flex-direction: column;
@@ -55,13 +57,9 @@ main {
     max-height: calc(100vh - 20px);
 }
 
-.project-wrapper {
-    background-color: var(--project-color);
-    margin-right: 5px;
-}
-
-fieldset {
-    width: max-content;
+.top-wrapper {
+    display: flex;
+    justify-content: space-between;
 }
 
 .inner-container {
@@ -90,7 +88,55 @@ fieldset {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 
-.top-wrapper {
+.project-wrapper {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    background-color: var(--project-color);
+    margin-right: 5px;
+    padding: 20px 10px;
+    color: var(--font-color);
+}
+
+.button-wrapper {
+    display: flex;
+    gap: 7px;
+}
+
+.edit-btn, .delete-btn {
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: var(--project-button-font-size);
+    transition: all 0.3 ease;
+    text-align: center;
+}
+
+.edit-btn:hover {
+    filter: brightness(115%);
+}
+
+.delete-btn:hover {
+    filter: brightness(125%);
+}
+
+.project-wrapper, .edit-btn, .delete-btn {
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: var(--green-button-color);
+}
+
+.delete-btn {
+    background-color: var(--red-button-color);
+}
+
+.project-title {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+fieldset {
+    width: max-content;
 }

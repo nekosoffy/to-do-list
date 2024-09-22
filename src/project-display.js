@@ -48,19 +48,23 @@ const projectDisplay = () => {
         projectsContainer.appendChild(projectForm);
         project.getProjectList().forEach((project, index) => {
             const wrapper = document.createElement("div");
+            const buttonWrapper = document.createElement("div");
             wrapper.classList.add("project-wrapper");
+            buttonWrapper.classList.add("button-wrapper");
             wrapper.setAttribute("data-index", index);
             wrapper.addEventListener("click", handleClick);
-            create("p", wrapper, "", "", `${Object.keys(project)[0]}`);
-            create("button", wrapper, "", "edit-btn", "Edit");
+            create("p", wrapper, "", "project-title", `${Object.keys(project)[0]}`);
+            create("button", buttonWrapper, "", "edit-btn", "Edit");
             
             if (index !== 0 ||
                 Object.values(project)[0].length ||
                 Object.keys(project)[0] !== "Default Project") { 
-                    create("button", wrapper, "", "delete-btn", "Delete"); // Check if project is not the default one before adding a delete button.
+                    create("button", buttonWrapper, "", "delete-btn", "Delete"); // Check if project is not the default one before adding a delete button.
             }
 
+            wrapper.appendChild(buttonWrapper);
             projectsContainer.appendChild(wrapper);
+
         })
 
         const firstProject = select('[data-index="0"]');

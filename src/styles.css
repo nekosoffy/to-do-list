@@ -63,6 +63,11 @@ main {
     justify-content: space-between;
 }
 
+h1 {
+    font-weight: bold;
+    color: var(--font-color);
+}
+
 .inner-container {
     overflow-y: auto;
     display: flex;

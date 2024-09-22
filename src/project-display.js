@@ -119,6 +119,7 @@ const projectDisplay = () => {
         currentIndex = null;
         allowInteraction = true;
         updateProjects();
+        highlightProject();
     }
 
     function handleSubmit(event) {
@@ -128,17 +129,21 @@ const projectDisplay = () => {
             hideForm();
             projectForm.classList.add("hidden");
             updateProjects();
+            highlightProject();
         } else {
             event.preventDefault();
             project.edit(currentIndex, projectTitle.value);
             hideForm();
             updateProjects();
+            highlightProject();
         }
     }
 
     function handleClick(event) {
         const target = event.target;
         currentIndex = parseInt(target.closest("[data-index]").dataset.index);
+        project.select(currentIndex);
+        highlightProject();
         if (target.classList.contains("edit-btn") && allowInteraction) {
             allowInteraction = false;
             const editForm = projectForm.cloneNode(true);
@@ -160,9 +165,7 @@ const projectDisplay = () => {
             project.remove(currentIndex);
             updateProjects();
         } else if (allowInteraction) {
-            const wrappers = projectsContainer.childNodes;
-            wrappers.forEach(el => el.removeAttribute("id"));
-            (target.closest("[data-index]")).id = "selected-project";
+            highlightProject();
             project.select(currentIndex);
             taskDisplayInstance.updateTasks();
             showProjectTitle(currentIndex);
@@ -174,17 +177,18 @@ const projectDisplay = () => {
         h2.textContent = Object.keys(project.getProjectList()[index])[0];
     }
 
-    function highlightDefaultProject() {
+    function highlightProject() {
         const wrappers = projectsContainer.childNodes;
-        console.log(wrappers);
-        wrappers[1].id = "selected-project";
+        wrappers.forEach(el => el.removeAttribute("id"));
+        const index = project.getSelectedProject() + 1;
+        wrappers[index].id = "selected-project";
     }
 
     newProjectBtn.addEventListener("click", showForm);
     projectForm.addEventListener("submit", handleSubmit);
     cancelBtn.addEventListener("click", hideForm);
 
-    return { showProjectTitle, updateProjects, allowInteraction, highlightDefaultProject };
+    return { showProjectTitle, updateProjects, allowInteraction, highlightProject };
 }
 
 export { projectDisplay, select, selectId, create, allowInteraction, changeInteraction };

@@ -46,6 +46,7 @@ const taskDisplay = () => {
         const tasks = Object.values(project.getProjectList()[project.getSelectedProject()])[0];
         
         tasks.forEach((task, index) => {
+            let hasChecklist = false;
             const wrapper = document.createElement("div");
             const ul = document.createElement("ul");
             const newFieldset = document.createElement("fieldset");
@@ -69,11 +70,11 @@ const taskDisplay = () => {
                 } else if (
                     Object.keys(element)[0] === "Checklist:" &&
                     Object.values(element)[0].length) {
-                    
+
+                        hasChecklist = true;
                         create("legend", newFieldset, "checklist-title", "", "Checklist");
 
                     for (let item of Object.values(element)[0]) {
-                        
                         const li = document.createElement("li");
                         create("button", li, "", "checklist-status");
                         create("span", li, "", "checklist-item", Object.keys(item)[0]);
@@ -83,8 +84,12 @@ const taskDisplay = () => {
             }    
 
             wrapper.appendChild(ul);
-            newFieldset.appendChild(checklistUl);
-            wrapper.appendChild(newFieldset);
+
+            if (hasChecklist) {
+                newFieldset.appendChild(checklistUl);
+                wrapper.appendChild(newFieldset);
+            }
+            
         
             create("button", wrapper, "", "edit-btn", "Edit");
             create("button", wrapper, "", "delete-btn", "Delete");

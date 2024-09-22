@@ -120,14 +120,20 @@ const projectDisplay = () => {
         } else if (allowInteraction) {
             project.select(currentIndex);
             taskDisplayInstance.updateTasks();
+            showProjectTitle(currentIndex);
         }
     }
 
-    updateProjects();
+    function showProjectTitle(index) {
+        const h2 = select("h2");
+        h2.textContent = Object.keys(project.getProjectList()[index])[0];
+    }
 
     newProjectBtn.addEventListener("click", showForm);
     projectForm.addEventListener("submit", handleSubmit);
     cancelBtn.addEventListener("click", hideForm);
+
+    return { showProjectTitle, updateProjects };
 }
 
 export { projectDisplay, select, selectId, create, changeInteraction, allowInteraction };

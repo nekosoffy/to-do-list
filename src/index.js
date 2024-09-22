@@ -171,8 +171,11 @@ const manageTask = () => {
 const task = manageTask();
 
 project.getStorage();
-projectDisplay();
+const ProjectDisplayInstance = projectDisplay();
 const taskDisplayInstance = taskDisplay();
+ProjectDisplayInstance.updateProjects();
+ProjectDisplayInstance.showProjectTitle(0);
 taskDisplayInstance.updateTasks();
+
 
 export { task, project, taskDisplayInstance };

@@ -1,7 +1,57 @@
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('./fonts/opensans-regular-webfont.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --background-color: rgb(88, 95, 105);
+    --container-color: rgb(48, 54, 66);
+    --project-color: rgb(61, 69, 82);
+}
+
+
+body {
+    font-family: 'open_sansregular', sans-serif;
+    background-color: var(--background-color);
+    height: 100vh;
+}
+
 .hidden {
     display: none;
 }
 
 ul, li {
     padding: 0;
+}
+
+main {
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.project-wrapper,
+.container {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.container {
+    background-color: var(--container-color);
+    flex-grow: 1;
+    overflow-y: auto;
+    align-self: stretch;
+}
+
+.project-wrapper {
+    background-color: var(--project-color);
+}
+
+fieldset {
+    width: max-content;
 }

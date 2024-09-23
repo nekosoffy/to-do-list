@@ -17,7 +17,8 @@
     --green-button-color: rgb(179, 209, 157);
     --new-button-color: rgb(127, 113, 196);
 
-    --project-button-font-size: 1.3rem;
+    --project-button-font-size: 1.5rem;
+    --new-project-button-font-size: 1.7rem;
 }
 
 body {
@@ -132,6 +133,7 @@ button, .project-wrapper {
 .edit-btn, .delete-btn {
     border-radius: 5px;
     font-size: var(--project-button-font-size);
+    padding: 5px 8px;
 }
 
 .edit-btn:hover {
@@ -166,13 +168,13 @@ button, .project-wrapper {
 
 .project-form .confirm-btn {
     background-color: var(--new-button-color);
-    border-radius: 5px;
-    padding: 3px;
 }
 
-.project-form .cancel-btn {
+.project-form .cancel-btn, 
+.project-form .confirm-btn {
     border-radius: 5px;
-    padding: 3px;
+    padding: 5px 8px;
+    font-size: var(--project-button-font-size);
 }
 
 .project-form .confirm-btn:hover {
@@ -191,6 +193,7 @@ fieldset {
 
 #new-project {
     background-color: var(--new-button-color);
+    font-size: var(--new-project-button-font-size);
     border-radius: 5px;
     padding: 10px;
 }
@@ -210,4 +213,5 @@ fieldset {
 .project-form input:focus, 
 .project-form input:active {
     border: 3px solid var(--selected-color);
+    border-radius: 10px;
 }

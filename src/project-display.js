@@ -71,7 +71,7 @@ const projectDisplay = () => {
             }
 
             wrapper.appendChild(buttonWrapper);
-            projectsContainer.appendChild(wrapper);
+            projectForm.after(wrapper);
         })
 
         const firstProject = select('[data-index="0"]');
@@ -159,8 +159,6 @@ const projectDisplay = () => {
     function handleClick(event) {
         const target = event.target;
         currentIndex = parseInt(target.closest("[data-index]").dataset.index);
-        project.select(currentIndex);
-        highlightProject();
         if (target.classList.contains("edit-btn") && allowInteraction) {
             allowInteraction = false;
             const editForm = projectForm.cloneNode(true);
@@ -189,8 +187,8 @@ const projectDisplay = () => {
             highlightProject();
             showProjectTitle(project.getSelectedProject());
         } else if (allowInteraction) {
-            highlightProject();
             project.select(currentIndex);
+            highlightProject();
             taskDisplayInstance.updateTasks();
             showProjectTitle(currentIndex);
         }
@@ -203,9 +201,11 @@ const projectDisplay = () => {
 
     function highlightProject() {
         if (allowInteraction){
-            const wrappers = projectsContainer.childNodes;
+            let wrappers = projectsContainer.querySelectorAll(".project-wrapper");
+            wrappers = [...wrappers];
+            wrappers = wrappers.reverse();
             wrappers.forEach(el => el.removeAttribute("id"));
-            const index = project.getSelectedProject() + 1;
+            const index = project.getSelectedProject();
             wrappers[index].id = "selected-project";
         }
     }

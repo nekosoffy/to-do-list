@@ -119,7 +119,7 @@ const projectDisplay = () => {
         if (allowInteraction) {
             projectsContainer.scrollTo(0, 0);
             newProjectBtn.classList.add("hidden");
-            projectForm.classList.remove("hidden");
+            projectForm.classList.remove("removed");
             formInput.focus();
             allowInteraction = false;
         }
@@ -128,7 +128,7 @@ const projectDisplay = () => {
     function hideForm () {
         newProjectBtn.classList.remove("hidden");
         projectForm.reset();
-        projectForm.classList.add("hidden");
+        projectForm.classList.add("removed");
         label.textContent = "Name your project:";
         editMode = false;
         currentIndex = null;
@@ -143,7 +143,7 @@ const projectDisplay = () => {
             console.log(projectTitle);
             project.create(projectTitle.value);
             hideForm();
-            projectForm.classList.add("hidden");
+            projectForm.classList.add("removed");
             updateProjects();
             highlightProject();
         } else {
@@ -172,7 +172,7 @@ const projectDisplay = () => {
             const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
             const currentProject = target.closest(".project-wrapper");
             formsSelector.forEach(el => el.value = currentTitle); // Set the input's content to default to the current title when editing.
-            editForm.classList.remove("hidden");
+            editForm.classList.remove("removed");
             currentProject.replaceWith(editForm);
 
             const newCancelBtn = selectAll(".project-form .cancel-btn");

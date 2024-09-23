@@ -27,8 +27,12 @@ body {
     height: 100%;
 }
 
-.hidden {
+.removed {
     display: none !important;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 ul, li {

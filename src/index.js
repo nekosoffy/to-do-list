@@ -8,7 +8,7 @@ const manageProject = () => {
         { 
             "Default Project": [],
             latestDueDate: null,
-            id: 1
+            id: 0
         }
     ];
 
@@ -21,8 +21,11 @@ const manageProject = () => {
             id: projectList.length
         };
 
+        console.log(projectList.length);
 
         projectList.push(project);
+
+        console.log(projectList.length);
 
         console.log(projectList);
 
@@ -56,10 +59,8 @@ const manageProject = () => {
 
         projectList.splice(projectIndex, 1);
 
-        if (selectedProject > projectIndex ||
-            selectedProject === projectIndex && 
-            selectedProject >= projectList.length) {
-            selectedProject -= 1;
+        if (selectedProject >= projectList.length) {
+            selectedProject = projectList.length - 1;
         }
 
         if (!projectList.length) { // To always make sure there's the default project.
@@ -67,13 +68,15 @@ const manageProject = () => {
                 { 
                     "Default Project": [],
                     latestDueDate: null,
-                    id: 1
+                    id: 0
                 }
             ); 
             selectedProject = 0;
         }
 
         sortProjectsByLatestDueDate();
+        console.log(getSelectedProject());
+        console.log(getProjectList());
     }
 
     function select(projectIndex) {
@@ -172,14 +175,10 @@ const manageTask = () => {
             { "Completed:": false }
         ];
 
-        console.log(project.getProjectList());
-
         tasksArray.push(list);
         sortTasksByDueDate();
         project.updateLatestDueDate(project.getSelectedProject());
         project.sortProjectsByLatestDueDate();
-
-        console.log(project.getProjectList());
     }
 
     function edit(taskIndex, property, newValue) {

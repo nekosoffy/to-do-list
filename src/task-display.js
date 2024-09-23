@@ -60,16 +60,21 @@ const taskDisplay = () => {
             wrapper.setAttribute("data-index", index);
             wrapper.addEventListener("click", handleClick);
 
-            const firstElements = ["Title:", "Description:"] 
             const nextElements = ["Notes:", "Priority:"]; 
 
             for (let element of task) {
-                if (firstElements.includes(Object.keys(element)[0]) && 
+                if (Object.keys(element)[0] === "Title:" && 
                 Object.values(element)[0] !== "") {
                     
                     const li = document.createElement("li");
-                    create("span", li, "", "item-title", Object.keys(element)[0]);
-                    create("span", li, "", "item-value", ` ${Object.values(element)[0]}`);
+                    create("h4", li, "", "item-value", ` ${Object.values(element)[0]}`);
+                    ul.appendChild(li);
+
+                } else if (Object.keys(element)[0] === "Description:" && 
+                Object.values(element)[0] !== "") {
+
+                    const li = document.createElement("li");
+                    create("p", li, "", "item-description", ` ${Object.values(element)[0]}`);
                     ul.appendChild(li);
 
                 } else if (Object.keys(element)[0] === "Due Date:") {
@@ -98,8 +103,11 @@ const taskDisplay = () => {
 
                     for (let item of Object.values(element)[0]) {
                         const li = document.createElement("li");
-                        create("button", li, "", "checklist-status");
-                        create("span", li, "", "checklist-item", Object.keys(item)[0]);
+                        const checklistItemBtn = create("button", li, "", "checklist-status");
+                        checklistItemBtn.addEventListener("click", completeChecklistItem);
+                        create("span", li, "", "checklist-item", item);
+                        console.log(Object.values(item)[0]);
+                        console.log(project.getProjectList())
                         checklistUl.appendChild(li);
                     }
                 }
@@ -112,7 +120,6 @@ const taskDisplay = () => {
                 wrapper.appendChild(newFieldset);
             }
         
-            create("button", wrapper, "", "edit-btn", "Edit");
             create("button", wrapper, "", "delete-btn", "Delete");
             tasksContainer.appendChild(wrapper);
         });
@@ -138,7 +145,8 @@ const taskDisplay = () => {
 
             const newLi = document.createElement("li");
             const span = document.createElement("span");
-            const remove = document.createElement("button")
+            const remove = document.createElement("button");
+            const formChecklistUl = select("fieldset ul");
             
             span.textContent = text;
             remove.setAttribute("type", "button");
@@ -147,7 +155,7 @@ const taskDisplay = () => {
 
             newLi.appendChild(span);
             newLi.appendChild(remove);
-            ul.appendChild(newLi);
+            formChecklistUl.appendChild(newLi);
         }
     }
 
@@ -155,16 +163,17 @@ const taskDisplay = () => {
         const button = event.target;
         const deleteAllBtn = selectId("delete-checklist");
         const li = select("#task-form li");
+        const formChecklistUl = select("fieldset ul");
     
         if (button.id === "delete-checklist") {
-            ul.replaceChildren();
+            formChecklistUl.replaceChildren();
             deleteAllBtn.remove();
         }
         if (button.id === "checklist-item-delete") {
             button.closest("li").remove();
             
             if (!fieldset.contains(li)) {
-                ul.replaceChildren();
+                formChecklistUl.replaceChildren();
                 deleteAllBtn.remove();
             }
         }
@@ -191,7 +200,19 @@ const taskDisplay = () => {
         task.create(...inputValues);
         updateTasks();
     }
-    
+
+    function completeChecklistItem(event) {
+        const button = event.target;
+        const item = button.nextElementSibling;
+
+        if (item.classList.contains("checked")) {
+            item.classList.remove("checked");
+        } else {
+            item.classList.add("checked");
+        }
+        
+    }
+
     fieldset.addEventListener("click", handleChecklistBtnClick);
     taskForm.addEventListener("submit", handleSubmit);
     newTaskBtn.addEventListener("click", showForm);

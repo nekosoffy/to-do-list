@@ -14,7 +14,7 @@ const taskDisplay = () => {
     
     function showForm() {
         if (allowInteraction){
-            taskForm.classList.remove("hidden");
+            taskForm.classList.remove("removed");
             newTaskBtn.classList.add("hidden");
             changeInteraction();
         }
@@ -23,7 +23,7 @@ const taskDisplay = () => {
 
     function hideForm() {
         const deleteAllBtnSelector = selectId("delete-checklist"); 
-        taskForm.classList.add("hidden");
+        taskForm.classList.add("removed");
         newTaskBtn.classList.remove("hidden");
         taskForm.reset();
         changeInteraction();

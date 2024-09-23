@@ -18,7 +18,8 @@
     --new-button-color: rgb(127, 113, 196);
 
     --project-button-font-size: 1.5rem;
-    --new-project-button-font-size: 1.7rem;
+    --new-project-button-font-size: 2rem;
+    --header-font-size: 3.5rem;
 }
 
 body {
@@ -70,6 +71,7 @@ main {
 
 h1 {
     font-weight: bold;
+    font-size: var(--header-font-size);
     color: var(--font-color);
 }
 

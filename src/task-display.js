@@ -51,7 +51,7 @@ const taskDisplay = () => {
         
         tasks.forEach((task, index) => {
             let hasChecklist = false;
-            const wrapper = document.createElement("div");
+            const wrapper = document.createElement("article");
             const ul = document.createElement("ul");
             const newFieldset = document.createElement("fieldset");
             const checklistUl = document.createElement("ul");

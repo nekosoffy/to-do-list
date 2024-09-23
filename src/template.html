@@ -14,10 +14,12 @@
             </div>
             <div id="projects-container" class="inner-container">
                 <form class="project-form removed">
-                    <div class="input-wrapper">
-                        <label for="project-title">Name your project:</label>
-                        <input type="text" id="project-title" maxlength="100" value="Cool Project" required />
-                    </div>
+                    <ul>
+                        <li class="input-wrapper">
+                            <label for="project-title">Name your project:</label>
+                            <input type="text" id="project-title" maxlength="100" value="Cool Project" required />
+                        </li>
+                    </ul>
                     <div class="button-wrapper">
                         <button type="button" class="cancel-btn">Cancel</button>
                         <button type="submit" class="confirm-btn">Confirm</button>
@@ -27,41 +29,45 @@
         </div>
         <div class="container">
             <div class="top-wrapper">
-                <h2></h2>
+                <h3></h3>
                 <button type="button" id="new-task">New Task</button>
             </div>
             <div id="tasks-container" class="inner-container">
                 <form id="task-form" class="removed">
-                    <div class="input-wrapper">
-                        <label for="task-title">Subject:</label>
-                        <input type="text" id="task-title" maxlength="70" required />
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="task-description">Description:</label>
-                        <input type="textarea" id="task-description" maxlength="150" />
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="task-date">Due Date:</label>
-                        <input type="date" id="task-date" />
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="task-priority">Priority:</label>
-                        <select id="task-priority">
-                            <option value="Low">Low</option>
-                            <option value="Medium">Medium</option>
-                            <option value="High">High</option>
-                        </select>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="task-notes">Notes:</label>
-                        <input type="textarea" id="task-notes" />
-                    </div>
-                    <fieldset>
-                        <legend>Add a checklist item</legend>
-                        <input type="text" id="checklist-item" />
-                        <button type="button" id="new-checklist">Confirm</button>
-                        <ul></ul>
-                    </fieldset>
+                    <ul>
+                        <li class="input-wrapper">
+                            <label for="task-title">Subject:</label>
+                            <input type="text" id="task-title" maxlength="70" required />
+                        </li>
+                        <li class="input-wrapper">
+                            <label for="task-description">Description:</label>
+                            <input type="textarea" id="task-description" maxlength="150" />
+                        </li>
+                        <li class="input-wrapper">
+                            <label for="task-date">Due Date:</label>
+                            <input type="date" id="task-date" />
+                        </li>
+                        <li class="input-wrapper">
+                            <label for="task-priority">Priority:</label>
+                            <select id="task-priority">
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </li>
+                        <li class="input-wrapper">
+                            <label for="task-notes">Notes:</label>
+                            <input type="textarea" id="task-notes" />
+                        </li>
+                        <li>
+                            <fieldset>
+                                <legend>Add a checklist item</legend>
+                                <input type="text" id="checklist-item" />
+                                <button type="button" id="new-checklist">Confirm</button>
+                                <ul></ul>
+                            </fieldset>
+                        </li>
+                    </ul>
                     <button type="button" class="cancel-btn">Cancel</button>
                     <button type="submit" class="confirm-btn">Confirm</button>
                 </form>

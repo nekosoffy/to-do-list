@@ -225,11 +225,15 @@ fieldset {
     border-radius: 10px;
 }
 
-.project-wrapper span {
+.project-wrapper li {
     font-size: var(--project-description-font-size);
 }
 
-.project-wrapper span:first-of-type {
+.project-wrapper .task-counter {
     font-weight: bold;
     color: var(--secondary-color);
+}
+
+.project-wrapper .duedate-text {
+    font-weight: bold;
 }

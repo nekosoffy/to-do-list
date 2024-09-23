@@ -58,9 +58,9 @@ const projectDisplay = () => {
                     notCompleted++;
             })
 
-            const wrapper = document.createElement("div");
+            const wrapper = document.createElement("section");
             const buttonWrapper = document.createElement("div");
-            const textWrapper = document.createElement("div");
+            const textWrapper = document.createElement("ul");
 
             wrapper.classList.add("project-wrapper");
             wrapper.setAttribute("data-index", index);
@@ -70,20 +70,24 @@ const projectDisplay = () => {
 
             buttonWrapper.classList.add("button-wrapper");
 
-            create("p", textWrapper, "", "project-title", `${Object.keys(project)[0]}`);
+            const title = create("li", textWrapper);
+            create("h2", title, "", "project-title", `${Object.keys(project)[0]}`);
 
             if (notCompleted > 0) {
-                create("span", textWrapper, "", "task-counter", notCompleted);
+                const counter = create("li", textWrapper);
+                create("span", counter, "", "task-counter", notCompleted);
 
                 if (notCompleted < 2) {
-                    create("span", textWrapper, "", "counter-text", " incomplete task");
+                    create("span", counter, "", "", " incomplete task");
                 } else {
-                    create("span", textWrapper, "", "counter-text", " incomplete tasks");
+                    create("span", counter, "", "", " incomplete tasks");
                 } 
             }
 
             if (Object.values(project)[1]) {
-                create("p", textWrapper, "", "duedate-text", `Earliest due date: ${format(Object.values(project)[1], "yyyy/MM/dd")}`);
+                const dueDate = create("li", textWrapper);
+                create("span", dueDate, "", "", `Earliest due date: `);
+                create("span", dueDate, "", "duedate-text", `${format(Object.values(project)[1], "yyyy/MM/dd")}`);
             }
 
             const editBtn = create("button", buttonWrapper, "", "edit-btn", "Edit");
@@ -220,8 +224,8 @@ const projectDisplay = () => {
     }
 
     function showProjectTitle(index) {
-        const h2 = select("h2");
-        h2.textContent = Object.keys(project.getProjectList()[index])[0];
+        const h3 = select("h3");
+        h3.textContent = Object.keys(project.getProjectList()[index])[0];
     }
 
     function highlightProject() {

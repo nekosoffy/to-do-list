@@ -79,18 +79,21 @@ const projectDisplay = () => {
         const deleteBtn = select(".delete-btn");
 
         if (projectsContainer.contains(secondProject) && 
-            !firstProject.contains(deleteBtn)) { // Allows deleting default project after there is at least another one.
-                const buttonWrapper = select(".button-wrapper");
+        !firstProject.querySelector(".delete-btn")) { // Allows deleting default project after there is at least another one.
+        const buttonWrapper = firstProject.querySelector(".button-wrapper");
+
+            if (buttonWrapper) { // Ensure buttonWrapper exists before removing
                 const newButtonWrapper = document.createElement("div");
                 newButtonWrapper.classList.add("button-wrapper");
-                firstProject.removeChild(buttonWrapper);
-                const editBtn = create("button", newButtonWrapper, "", "edit-btn", "Edit");
-                const deleteBtn = create("button", newButtonWrapper, "", "delete-btn", "Delete"); 
-                editBtn.classList.add("hidden");
-                deleteBtn.classList.add("hidden");
-                firstProject.appendChild(newButtonWrapper);
-        }
 
+                firstProject.removeChild(buttonWrapper);
+                create("button", newButtonWrapper, "", "edit-btn", "Edit").classList.add("hidden");
+                create("button", newButtonWrapper, "", "delete-btn", "Delete").classList.add("hidden");
+
+                firstProject.appendChild(newButtonWrapper);
+            }
+        }
+        
         project.populateStorage();
     }
 
@@ -145,7 +148,8 @@ const projectDisplay = () => {
             highlightProject();
         } else {
             event.preventDefault();
-            project.edit(currentIndex, projectTitle.value);
+            const formsSelector = document.querySelectorAll("#project-title");
+            project.edit(currentIndex, formsSelector[1].value);
             hideForm();
             updateProjects();
             highlightProject();
@@ -163,11 +167,11 @@ const projectDisplay = () => {
             projectsContainer.appendChild(editForm);
             editForm.addEventListener("submit", handleSubmit);
             const newLabel = selectAll("[for=project-title]");
-            const editProjectTitle = selectAll("#project-title");
+            const formsSelector = selectAll("#project-title");
             newLabel.forEach(el => el.textContent = "New title:");
             const currentTitle = Object.keys(project.getProjectList()[currentIndex])[0];
             const currentProject = target.closest(".project-wrapper");
-            editProjectTitle.forEach(el => el.value = currentTitle); // Set the input's content to default to the current title when editing.
+            formsSelector.forEach(el => el.value = currentTitle); // Set the input's content to default to the current title when editing.
             editForm.classList.remove("hidden");
             currentProject.replaceWith(editForm);
 

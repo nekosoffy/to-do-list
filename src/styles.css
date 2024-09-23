@@ -27,7 +27,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 ul, li {
@@ -43,7 +43,7 @@ main {
 }
 
 .project-wrapper,
-.container {
+.container, .project-form {
     border-radius: 10px;
 }
 
@@ -94,7 +94,7 @@ h1 {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 
-.project-wrapper {
+.project-wrapper, .project-form {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -139,7 +139,8 @@ button, .project-wrapper {
     transform: scale(0.95);
 }
 
-.delete-btn:hover {
+.delete-btn:hover, 
+.project-form .cancel-btn:hover {
     filter: brightness(120%);
     transform: scale(0.95);
 }
@@ -148,13 +149,40 @@ button, .project-wrapper {
     background-color: var(--secondary-color);
 }
 
-.delete-btn {
+.delete-btn,
+.project-form .cancel-btn {
     background-color: var(--red-button-color);
 }
 
-.project-title {
+.project-title,
+.project-form label[for="project-title"] {
     font-weight: bold;
     font-size: 2rem;
+}
+
+.project-form {
+    background-color: var(--hover-color);
+}
+
+.project-form .confirm-btn {
+    background-color: var(--new-button-color);
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.project-form .cancel-btn {
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.project-form .confirm-btn:hover {
+    filter: brightness(120%);
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 fieldset {
@@ -170,4 +198,16 @@ fieldset {
 #new-project:hover {
     filter: brightness(120%);
     transform: scale(0.95);
+}
+
+.project-form input {
+    border-radius: 5px;
+    padding: 3px;
+    border: none;
+    outline: none;
+}
+
+.project-form input:focus, 
+.project-form input:active {
+    border: 3px solid var(--selected-color);
 }

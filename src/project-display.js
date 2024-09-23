@@ -1,4 +1,4 @@
-import { project, taskDisplayInstance } from "./index.js";
+import { project, taskDisp } from "./index.js";
 
 // Helper functions
 const select = (target) => document.querySelector(target);
@@ -48,8 +48,18 @@ const projectDisplay = () => {
         projectsContainer.replaceChildren();
         projectsContainer.appendChild(projectForm);
         project.getProjectList().forEach((project, index) => {
+
+
+            const tasks = Object.values(project)[0];
+            let notCompleted = 0;
+            tasks.forEach(task => {
+                if (!task["Completed:"])
+                    notCompleted++;
+            })
+
             const wrapper = document.createElement("div");
             const buttonWrapper = document.createElement("div");
+            const textWrapper = document.createElement("div");
 
             wrapper.classList.add("project-wrapper");
             wrapper.setAttribute("data-index", index);
@@ -59,7 +69,18 @@ const projectDisplay = () => {
 
             buttonWrapper.classList.add("button-wrapper");
 
-            create("p", wrapper, "", "project-title", `${Object.keys(project)[0]}`);
+            create("p", textWrapper, "", "project-title", `${Object.keys(project)[0]}`);
+
+            if (notCompleted > 0) {
+                create("span", textWrapper, "", "task-counter", notCompleted);
+
+                if (notCompleted < 2) {
+                    create("span", textWrapper, "", "counter-text", " incomplete task");
+                } else {
+                    create("span", textWrapper, "", "counter-text", " incomplete tasks");
+                } 
+            }
+
             const editBtn = create("button", buttonWrapper, "", "edit-btn", "Edit");
             editBtn.classList.add("hidden");
             
@@ -69,7 +90,8 @@ const projectDisplay = () => {
                 const deleteBtn = create("button", buttonWrapper, "", "delete-btn", "Delete"); // Check if project is not the default one before adding a delete button.
                 deleteBtn.classList.add("hidden");
             }
-
+            
+            wrapper.appendChild(textWrapper);
             wrapper.appendChild(buttonWrapper);
             projectForm.after(wrapper);
         })
@@ -183,13 +205,13 @@ const projectDisplay = () => {
             fadeOut(wrapper);
             project.remove(currentIndex);
             updateProjects();  
-            taskDisplayInstance.updateTasks();
+            taskDisp.updateTasks();
             highlightProject();
             showProjectTitle(project.getSelectedProject());
         } else if (allowInteraction) {
             project.select(currentIndex);
             highlightProject();
-            taskDisplayInstance.updateTasks();
+            taskDisp.updateTasks();
             showProjectTitle(currentIndex);
         }
     }
@@ -226,7 +248,7 @@ const projectDisplay = () => {
     projectForm.addEventListener("submit", handleSubmit);
     cancelBtn.addEventListener("click", hideForm);
 
-    return { showProjectTitle, updateProjects, allowInteraction, highlightProject };
+    return { showProjectTitle, updateProjects, allowInteraction, highlightProject, updateProjects };
 }
 
 export { projectDisplay, select, selectId, create, allowInteraction, changeInteraction };

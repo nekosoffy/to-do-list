@@ -1,4 +1,4 @@
-import { project, task } from "./index.js"
+import { project, task, projectDisp } from "./index.js"
 import { select, selectId, create, allowInteraction, changeInteraction } from "./project-display.js"
 
 const taskDisplay = () => {
@@ -98,6 +98,8 @@ const taskDisplay = () => {
             tasksContainer.appendChild(wrapper);
         });
 
+        projectDisp.updateProjects();
+        projectDisp.highlightProject();
         project.populateStorage();
     }
        

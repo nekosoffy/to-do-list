@@ -9,7 +9,7 @@
     --background-color: rgb(88, 95, 105);
     --container-color: rgb(48, 54, 66);
     --hover-color: rgb(85, 94, 109);
-    --selected-color: rgb(89, 140, 185);
+    --selected-color: rgb(66, 118, 163);
     --project-color: rgb(61, 69, 82);
     --font-color: rgb(241, 242, 244);
     --secondary-color: rgb(228, 156, 75);
@@ -20,6 +20,8 @@
     --project-button-font-size: 1.5rem;
     --new-project-button-font-size: 2rem;
     --header-font-size: 3.5rem;
+    --project-title-font-size: 2.5rem;
+    --project-description-font-size: 1.8rem;
 }
 
 body {
@@ -165,7 +167,7 @@ button, .project-wrapper {
 .project-title,
 .project-form label[for="project-title"] {
     font-weight: bold;
-    font-size: 2rem;
+    font-size: var(--project-title-font-size);
 }
 
 .project-form {
@@ -185,6 +187,7 @@ button, .project-wrapper {
 
 .project-form .confirm-btn:hover {
     filter: brightness(120%);
+    transform: scale(0.95);
 }
 
 .input-wrapper {
@@ -220,4 +223,13 @@ fieldset {
 .project-form input:active {
     border: 3px solid var(--selected-color);
     border-radius: 10px;
+}
+
+.project-wrapper span {
+    font-size: var(--project-description-font-size);
+}
+
+.project-wrapper span:first-of-type {
+    font-weight: bold;
+    color: var(--secondary-color);
 }

@@ -1,4 +1,5 @@
 import { project, taskDisp } from "./index.js";
+import { format } from "date-fns";
 
 // Helper functions
 const select = (target) => document.querySelector(target);
@@ -49,9 +50,9 @@ const projectDisplay = () => {
         projectsContainer.appendChild(projectForm);
         project.getProjectList().forEach((project, index) => {
 
-
             const tasks = Object.values(project)[0];
             let notCompleted = 0;
+
             tasks.forEach(task => {
                 if (!task["Completed:"])
                     notCompleted++;
@@ -79,6 +80,10 @@ const projectDisplay = () => {
                 } else {
                     create("span", textWrapper, "", "counter-text", " incomplete tasks");
                 } 
+            }
+
+            if (Object.values(project)[1]) {
+                create("p", textWrapper, "", "duedate-text", `Earliest due date: ${format(Object.values(project)[1], "yyyy/MM/dd")}`);
             }
 
             const editBtn = create("button", buttonWrapper, "", "edit-btn", "Edit");
@@ -162,7 +167,6 @@ const projectDisplay = () => {
     function handleSubmit(event) {
         if (editMode === false) {
             event.preventDefault();
-            console.log(projectTitle);
             project.create(projectTitle.value);
             hideForm();
             projectForm.classList.add("removed");
@@ -201,7 +205,6 @@ const projectDisplay = () => {
             editMode = true;
         } else if (target.classList.contains("delete-btn") && allowInteraction) {
             const wrapper = target.closest(".project-wrapper");
-            console.log(wrapper);
             fadeOut(wrapper);
             project.remove(currentIndex);
             updateProjects();  

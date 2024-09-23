@@ -1,5 +1,6 @@
 import { project, task, projectDisp } from "./index.js"
 import { select, selectId, create, allowInteraction, changeInteraction } from "./project-display.js"
+import { format } from "date-fns";
 
 const taskDisplay = () => {
     const newTaskBtn = selectId("new-task");
@@ -59,12 +60,30 @@ const taskDisplay = () => {
             wrapper.setAttribute("data-index", index);
             wrapper.addEventListener("click", handleClick);
 
-            const firstElements = ["Title:", "Description:", "Due Date:", "Notes:", "Priority:"]; 
+            const firstElements = ["Title:", "Description:"] 
+            const nextElements = ["Notes:", "Priority:"]; 
 
             for (let element of task) {
                 if (firstElements.includes(Object.keys(element)[0]) && 
                 Object.values(element)[0] !== "") {
                     
+                    const li = document.createElement("li");
+                    create("span", li, "", "item-title", Object.keys(element)[0]);
+                    create("span", li, "", "item-value", ` ${Object.values(element)[0]}`);
+                    ul.appendChild(li);
+
+                } else if (Object.keys(element)[0] === "Due Date:") {
+
+                    if (Object.values(element)[0]) {
+                    const li = document.createElement("li");
+                    create("span", li, "", "item-title", Object.keys(element)[0]);
+                    create("span", li, "", "item-value", ` ${format(Object.values(element)[0], "yyyy/MM/dd")}`);
+                    ul.appendChild(li);
+                    }
+            
+                } else if (nextElements.includes(Object.keys(element)[0]) && 
+                Object.values(element)[0] !== "") {
+
                     const li = document.createElement("li");
                     create("span", li, "", "item-title", Object.keys(element)[0]);
                     create("span", li, "", "item-value", ` ${Object.values(element)[0]}`);

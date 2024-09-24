@@ -114,6 +114,7 @@ const manageProject = () => {
             const dateB = b.latestDueDate;
     
             if (dateA === null && dateB === null) {
+                
                 return 0;
             } else if (dateA === null) {
                 return -1;
@@ -251,19 +252,24 @@ const manageTask = () => {
 
     function sortTasksByDueDate() {
         const tasksArray = getTasksArray();
+
         tasksArray.sort((a, b) => {
-            const dueDateA = new Date(a[2]["Due Date:"]);
-            const dueDateB = new Date(b[2]["Due Date:"]);
-    
-            if (isNaN(dueDateA) && isNaN(dueDateB)) {
-                return 0;
-            } else if (isNaN(dueDateA)) {
-                return 1;
-            } else if (isNaN(dueDateB)) {
+            const dateA = a[2]["Due Date:"];
+            const dateB = b[2]["Due Date:"];
+
+            if (dateA && dateB) {
+                return dateA - dateB;
+            }
+
+            if (dateA) {
                 return -1;
             }
-    
-            return dueDateA - dueDateB;
+
+            if (dateB) {
+                return 1;
+            }
+
+            return 0;
         });
     }
 

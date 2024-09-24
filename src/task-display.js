@@ -6,10 +6,10 @@ const taskDisplay = () => {
     const newTaskBtn = selectId("new-task");
     const taskForm = selectId("task-form");
     const cancelBtn = select("#task-form .cancel-btn");
-    const checklistConfirmBtn = selectId("new-checklist");
+    const checklistConfirmBtn = selectId("new-checklist-button");
     const fieldset = select("#task-form fieldset");
-    const itemInput = select("#checklist-item");
-    const ul = select("#task-form ul");
+    const itemInput = select("#new-checklist-item");
+    const ul = select(".checklist");
     const tasksContainer = select("#tasks-container");
     let currentIndex = null;
     
@@ -67,6 +67,7 @@ const taskDisplay = () => {
                 Object.values(element)[0] !== "") {
                     
                     const li = document.createElement("li");
+                    li.classList.add("title-li");
                     create("h4", li, "", "item-value", ` ${Object.values(element)[0]}`);
                     ul.appendChild(li);
 
@@ -74,6 +75,7 @@ const taskDisplay = () => {
                 Object.values(element)[0] !== "") {
 
                     const li = document.createElement("li");
+                    li.classList.add("task-li");
                     create("p", li, "", "item-description", ` ${Object.values(element)[0]}`);
                     ul.appendChild(li);
 
@@ -81,6 +83,7 @@ const taskDisplay = () => {
 
                     if (Object.values(element)[0]) {
                     const li = document.createElement("li");
+                    li.classList.add("task-li");
                     create("span", li, "", "item-title", Object.keys(element)[0]);
                     create("span", li, "", "item-value", ` ${format(Object.values(element)[0], "yyyy/MM/dd")}`);
                     ul.appendChild(li);
@@ -90,6 +93,7 @@ const taskDisplay = () => {
                 Object.values(element)[0] !== "") {
 
                     const li = document.createElement("li");
+                    li.classList.add("task-li");
                     create("span", li, "", "item-title", Object.keys(element)[0]);
                     create("span", li, "", "item-value", ` ${Object.values(element)[0]}`);
                     ul.appendChild(li);
@@ -101,13 +105,12 @@ const taskDisplay = () => {
                         hasChecklist = true;
                         create("legend", newFieldset, "checklist-title", "", "Checklist");
 
-                    for (let item of Object.values(element)[0]) {
+                    for (let item of Object.values(element)[0]) {;
                         const li = document.createElement("li");
+                        li.classList.add("checklist-li");
                         const checklistItemBtn = create("button", li, "", "checklist-status");
                         checklistItemBtn.addEventListener("click", completeChecklistItem);
-                        create("span", li, "", "checklist-item", item);
-                        console.log(Object.values(item)[0]);
-                        console.log(project.getProjectList())
+                        create("p", li, "", "checklist-item", item);
                         checklistUl.appendChild(li);
                     }
                 }
@@ -131,7 +134,7 @@ const taskDisplay = () => {
        
     function handleNewChecklistItem() {
         if (itemInput.value !== "") {
-            const text = itemInput.value;
+            const text = itemInput.value.at(0).toUpperCase() + itemInput.value.slice(1);
             itemInput.value = "";
             const deleteAllBtn = document.createElement("button"); 
             const deleteAllBtnSelector = selectId("delete-checklist");
@@ -144,36 +147,34 @@ const taskDisplay = () => {
             }
 
             const newLi = document.createElement("li");
-            const span = document.createElement("span");
+            newLi.classList.add("added-checklist-li");
+            const p = document.createElement("p");
+            p.classList.add("added-checklist-item");
             const remove = document.createElement("button");
-            const formChecklistUl = select("fieldset ul");
             
-            span.textContent = text;
+            p.textContent = `• ${text}`;
             remove.setAttribute("type", "button");
             remove.textContent = "Delete";
             remove.id = "checklist-item-delete";
 
-            newLi.appendChild(span);
+            newLi.appendChild(p);
             newLi.appendChild(remove);
-            formChecklistUl.appendChild(newLi);
+            ul.appendChild(newLi);
         }
     }
 
     function handleChecklistBtnClick(event) {
         const button = event.target;
         const deleteAllBtn = selectId("delete-checklist");
-        const li = select("#task-form li");
-        const formChecklistUl = select("fieldset ul");
     
         if (button.id === "delete-checklist") {
-            formChecklistUl.replaceChildren();
+            ul.replaceChildren();
             deleteAllBtn.remove();
         }
         if (button.id === "checklist-item-delete") {
             button.closest("li").remove();
             
-            if (!fieldset.contains(li)) {
-                formChecklistUl.replaceChildren();
+            if (ul.length = 0) {
                 deleteAllBtn.remove();
             }
         }
@@ -181,10 +182,10 @@ const taskDisplay = () => {
 
     function handleSubmit(event) {
         event.preventDefault();
-        const inputs = taskForm.querySelectorAll("input", "select", "textarea"); // Getting the form values.
+        const inputs = taskForm.querySelectorAll("input, textarea"); // Getting the form values.
         const sel = document.querySelector("select");
         const selectedOption = sel.options[sel.selectedIndex].text;
-        const checklistItems = fieldset.querySelectorAll("span");
+        const checklistItems = fieldset.querySelectorAll("p");
 
         const inputValues = Array.from(inputs).map(input => input.value);
         const checklistValues = Array.from(checklistItems).map(input => input.textContent);
@@ -192,7 +193,8 @@ const taskDisplay = () => {
         inputValues.pop(); // Removing the residual value of the form's checklist text input.
         inputValues.splice(3, 0, selectedOption); // Inserting the priority after getting it.
 
-        for (const el of checklistValues) {
+        for (let el of checklistValues) {
+            el = el.slice(2);
             inputValues.push(el); // Placing each checklist item along with the other values.
         }
 
@@ -207,8 +209,10 @@ const taskDisplay = () => {
 
         if (item.classList.contains("checked")) {
             item.classList.remove("checked");
+            button.classList.remove("pressed");
         } else {
             item.classList.add("checked");
+            button.classList.add("pressed");
         }
         
     }

@@ -57,19 +57,23 @@
                         </li>
                         <li class="input-wrapper">
                             <label for="task-notes">Notes:</label>
-                            <input type="textarea" id="task-notes" />
+                            <textarea id="task-notes" rows="3" cols="30"></textarea>
                         </li>
                         <li>
                             <fieldset>
                                 <legend>Add a checklist item</legend>
-                                <input type="text" id="checklist-item" maxlength="50" />
-                                <button type="button" id="new-checklist">Confirm</button>
-                                <ul></ul>
+                                <div class="checklist-wrapper">
+                                    <input type="text" id="new-checklist-item" maxlength="50" />
+                                    <button type="button" id="new-checklist-button">Add</button>
+                                </div>
+                                <ul class="checklist"></ul>
                             </fieldset>
                         </li>
                     </ul>
-                    <button type="button" class="cancel-btn">Cancel</button>
-                    <button type="submit" class="confirm-btn">Confirm</button>
+                    <div class="button-wrapper">
+                        <button type="button" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="confirm-btn">Confirm</button>
+                    </div>
                 </form>
             </div>
         </div>

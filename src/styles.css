@@ -14,23 +14,33 @@
     --font-color: rgb(241, 242, 244);
     --secondary-color: rgb(228, 156, 75);
     --red-button-color: rgb(236, 112, 96);
+    --task-background-color: rgb(138, 142, 150);
+    --dark-red-button-color: rgb(202, 48, 66);
     --green-button-color: rgb(179, 209, 157);
+    --dark-green-button-color: rgb(45, 141, 83);
     --new-button-color: rgb(127, 113, 196);
-    --task-background-color: rgb(223, 208, 149);
-    --checklist-button-color: rgb(137, 182, 106);
     --black-font-color: rgb(29, 28, 27);
+    --lighter-black-font-color: rgb(34, 34, 33);
     --checked-font-color: rgb(88, 86, 78);
-    --checked-color: rgb(80, 121, 53);
+    --checked-color: rgb(58, 90, 37);
+
+    --fieldset-background-color: rgb(223, 208, 149);
+    --fieldset-border-color: rgb(97, 107, 124);
+    --fieldset-red-button-color: rgb(231, 118, 103);
+    --fieldset-green-button-color: rgb(141, 177, 116);
+    --fieldset-purple-button-color:rgb(145, 133, 202);
+    --legend-color: rgb(207, 139, 62);
 
 
     --project-button-font-size: 1.5rem;
+    --checklist-button-font-size: 1.3rem;
     --new-project-button-font-size: 2rem;
     --project-header-font-size: 3.5rem;
     --project-title-font-size: 2.5rem;
     --project-description-font-size: 1.8rem;
     --task-header-font-size: 3rem;
     --task-title-font-size: 2rem;
-    --task-description-font-size: 1.9rem;
+    --task-description-font-size: 1.7rem;
 }
 
 body {
@@ -77,6 +87,11 @@ main {
     display: flex;
     justify-content: space-between;
     margin-right: 5px;
+}
+
+button:focus {
+    outline: none;
+    border: none;
 }
 
 h1 {
@@ -150,6 +165,7 @@ button, .project-wrapper {
     border-radius: 5px;
     font-size: var(--project-button-font-size);
     padding: 5px 8px;
+    color: var(--font-color);
 }
 
 .edit-btn:hover {
@@ -167,9 +183,14 @@ button, .project-wrapper {
     background-color: var(--secondary-color);
 }
 
-.delete-btn,
+.project-wrapper .delete-btn,
 .project-form .cancel-btn {
     background-color: var(--red-button-color);
+}
+
+.task-wrapper .delete-btn {
+    background-color: var(--dark-red-button-color);
+    color: var(--lighter-black-font-color);
 }
 
 .project-title,
@@ -201,14 +222,17 @@ button, .project-wrapper {
 .input-wrapper {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 
 fieldset {
     border-radius: 5px;
-    border-color: var(--container-color);
     align-self: center;
     width: 100%;
+    background-color: var(--fieldset-background-color);
+    border: none;
+    box-shadow: 4px 4px 5px -3px var(--black-font-color);
+    margin-bottom: 20px;
 }
 
 #new-project, #new-task {
@@ -224,9 +248,9 @@ fieldset {
 }
 
 .project-form input {
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 3px;
-    border: none;
+    border: 3px solid var(--hover-color);
     outline: none;
 }
 
@@ -263,36 +287,44 @@ h4 {
 }
 
 .item-value {
-    display: block; overflow-wrap: break-word; max-width : 100%;
+    display: block; 
+    overflow-wrap: break-word; 
+    max-width : 100%;
 }
 
-.task-wrapper li {
+.task-li {
     margin-bottom: 10px;
 }
 
-.task-wrapper li:first-of-type {
+.title-li {
     margin-bottom: 1px;
 }
 
-.task-wrapper fieldset li {
-    margin-bottom: 0;
+.checklist-li {
+    display: flex;
+    align-items: center;
 }
 
-.task-wrapper {
+.task-wrapper, #task-form {
     display: flex;
     flex-direction: column;
     background-color: var(--task-background-color);
     border-radius: 5px;
-    padding: 10px;
+    padding: 18px;
     color: var(--black-font-color);
+    max-height: max-content;
 }
 
 #tasks-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 25%));
-    grid-auto-rows: max-content;
-    gap: 20px;
+    flex-direction: column;
     flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: min-content;
+    gap: 20px;
+    overflow-y: auto;
+    padding-right: 5px;
+    align-content: start;
 }
 
 .item-description {
@@ -325,16 +357,24 @@ span::-webkit-scrollbar-thumb {
 }
 
 legend {
+    background-color: var(--legend-color);
     font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 4px;
 }
 
 .checklist-status {
-    width: 5px;
-    background-color: var(--checklist-button-color);
-    height: 13px;
-    margin-right: 5px;
+    display: inline-block;
+    width: 15px;
+    background-color: var(--new-button-color);
+    height: 15px;
+    margin-right: 8px;
     border-radius: 2px;
     transition: 0.3 all ease;
+}
+
+.pressed {
+    background-color: var(--dark-green-button-color);
 }
 
 .checklist-status:active {
@@ -344,6 +384,8 @@ legend {
 .task-wrapper .delete-btn {
     align-self: flex-end;
     margin-top: auto;
+    vertical-align: middle;
+    color: var(--font-color);
 }
 
 .checked {
@@ -355,10 +397,15 @@ legend {
 
 .task-wrapper fieldset {
     max-width: 100%;
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+
 }
 
 .checklist-item {
+    display: inline-block;
     word-break: break-all;
 }
 
@@ -366,10 +413,139 @@ ul {
     width: 100%;
 }
 
-.text-wrapper fieldset li {
+#task-form input:not(#new-checklist-item),
+#task-form select,
+#task-form textarea {
+    border-radius: 8px;
+    border: 2px solid var(--task-background-color);
+    padding: 3px;
+}
+
+#task-form input:not(#checklist-item):focus,
+#task-form select:focus,
+#task-form textarea:focus {
+    border-radius: 8px;
+    border: 2px solid var(--selected-color);
+    outline: none;
+}
+
+#new-checklist-item {
+    border-radius: 8px;
+    border: 2px solid var(--fieldset-background-color);
+    padding: 3px;
+}
+
+#task-form label {
+    font-weight: bold;
+}
+
+#task-form > ul {
     display: flex;
-    flex-grow: 1;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#task-title, #task-description {
+    width: 100%;
+}
+
+#task-date {
+    width: max-content;
+}
+
+#task-form fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    margin-top: 8px;
+}
+
+
+.checklist-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+#new-checklist-button {
+    background-color: var(--fieldset-green-button-color);
+    font-size: var(--project-button-font-size);
+}
+
+#new-checklist-button, 
+#checklist-item-delete,
+#delete-checklist {
+    color: var(--lighter-black-font-color);
+    border-radius: 5px;
+    transition: 0.3 all ease;
+}
+
+#new-checklist-button:hover,
+#checklist-item-delete:hover,
+#delete-checklist:hover {
+    filter: brightness(120%);
+}
+
+#checklist-item-delete:hover,
+#delete-checklist:hover {
+    transform: scale(0.95);
+}
+
+#new-checklist-button:active,
+#checklist-item-delete:active {
+    filter: brightness(120%);
+    transform: scale(0.95);
+}
+
+#checklist-item-delete {
+    font-size: var(--checklist-button-font-size);
+    background-color: var(--fieldset-red-button-color);
+    display: block;
+    width: max-content;
+    justify-self: end;
+}
+
+.added-checklist-item {
+    margin: 0 10px;
+}
+
+.added-checklist-li {
+    display: grid;
+    grid-template-columns: 4fr max-content;
+    margin-bottom: 10px;
+    word-break: break-all;
+    align-items: center;
+}
+
+#delete-checklist {
+    background-color: var(--fieldset-purple-button-color);
+    padding: 5px 8px;
+}
+
+#task-form .cancel-btn,
+#task-form .confirm-btn {
+    color: var(--font-color);
+    border-radius: 5px;
+    transition: 0.3 all ease;
+    padding: 5px 8px;
+}
+
+#task-form .button-wrapper {
+    margin-left: auto;
+}
+
+#task-form .cancel-btn:hover,
+#task-form .confirm-btn:hover {
+    filter: brightness(120%);
+    transform: scale(0.95);
+}
+
+#task-form .confirm-btn {
+    background-color: var(--dark-green-button-color);
+}
+
+#task-form .cancel-btn {
+    background-color: var(--dark-red-button-color);
 }

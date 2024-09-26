@@ -1,12 +1,12 @@
-import "./reset.css";
-import "./styles.css";
-import { projectDisplay } from "./project-display.js";
-import { taskDisplay } from "./task-display.js";
+import './reset.css';
+import './styles.css';
+import { projectDisplay } from './project-display.js';
+import { taskDisplay } from './task-display.js';
 
 const manageProject = () => {
   let projectList = [
     {
-      "Default Project": [],
+      'Default Project': [],
       latestDueDate: null,
       id: 0,
     },
@@ -43,7 +43,7 @@ const manageProject = () => {
     if (!projectList.length) {
       // To always make sure there's the default project.
       projectList.push({
-        "Default Project": [],
+        'Default Project': [],
         latestDueDate: null,
         id: 0,
       });
@@ -61,9 +61,9 @@ const manageProject = () => {
     const tasks = Object.values(projectList[projectIndex])[0];
     let latestDate = null;
 
-    tasks.forEach((task) => {
-      if (task[2]["Due Date:"]) {
-        const dueDate = task[2]["Due Date:"];
+    tasks.forEach(task => {
+      if (task[2]['Due Date:']) {
+        const dueDate = task[2]['Due Date:'];
         if (!latestDate || dueDate < latestDate) {
           latestDate = dueDate;
         }
@@ -82,9 +82,11 @@ const manageProject = () => {
 
       if (dateA === null && dateB === null) {
         return 0;
-      } else if (dateA === null) {
+      }
+      if (dateA === null) {
         return -1;
-      } else if (dateB === null) {
+      }
+      if (dateB === null) {
         return 1;
       }
 
@@ -92,20 +94,20 @@ const manageProject = () => {
     });
 
     const newSelectedIndex = projectList.findIndex(
-      (project) => project.id === previousSelectedId
+      project => project.id === previousSelectedId,
     );
     select(newSelectedIndex);
   }
 
   function populateStorage() {
-    localStorage.setItem("projects", JSON.stringify(projectList));
+    localStorage.setItem('projects', JSON.stringify(projectList));
   }
 
   function getStorage() {
-    if (!localStorage.getItem("projects")) {
+    if (!localStorage.getItem('projects')) {
       populateStorage();
     } else {
-      projectList = JSON.parse(localStorage.getItem("projects"));
+      projectList = JSON.parse(localStorage.getItem('projects'));
     }
   }
 
@@ -138,20 +140,20 @@ const manageTask = () => {
   function create(title, description, dueDate, priority, notes, ...checklist) {
     const tasksArray = getTasksArray();
 
-    const formattedChecklist = checklist.map((item) => {
-      return { [item]: "not completed" };
-    });
+    const formattedChecklist = checklist.map(item => ({
+      [item]: 'not completed',
+    }));
 
-    const date = dueDate ? new Date(dueDate + "T00:00:00") : null;
+    const date = dueDate ? new Date(`${dueDate}T00:00:00`) : null;
 
     const list = [
-      { "Title:": title },
-      { "Description:": description },
-      { "Due Date:": date },
-      { "Priority:": priority },
-      { "Notes:": notes },
-      { "Checklist:": checklist },
-      { "Completed:": false },
+      { 'Title:': title },
+      { 'Description:': description },
+      { 'Due Date:': date },
+      { 'Priority:': priority },
+      { 'Notes:': notes },
+      { 'Checklist:': checklist },
+      { 'Completed:': false },
     ];
 
     tasksArray.push(list);
@@ -163,12 +165,12 @@ const manageTask = () => {
   function edit(taskIndex, property, newValue) {
     const tasksArray = getTasksArray();
 
-    let validProperties = [
-      "title",
-      "description",
-      "dueDate",
-      "priority",
-      "notes",
+    const validProperties = [
+      'title',
+      'description',
+      'dueDate',
+      'priority',
+      'notes',
     ];
 
     if (validProperties.includes(property)) {
@@ -193,25 +195,24 @@ const manageTask = () => {
     const tasksArray = getTasksArray();
 
     const currentCompletion = Object.values(
-      tasksArray[taskIndex]["checklist"][checklistItemIndex]
+      tasksArray[taskIndex].checklist[checklistItemIndex],
     )[0];
     const editedChecklistItem = { [newItem]: currentCompletion };
-    tasksArray[taskIndex]["checklist"][checklistItemIndex] =
-      editedChecklistItem;
+    tasksArray[taskIndex].checklist[checklistItemIndex] = editedChecklistItem;
   }
 
   function markCompletion(taskIndex) {
     const tasksArray = getTasksArray();
 
-    tasksArray[taskIndex]["completed"] = !tasksArray[taskIndex]["completed"];
+    tasksArray[taskIndex].completed = !tasksArray[taskIndex].completed;
   }
 
   function sortTasksByDueDate() {
     const tasksArray = getTasksArray();
 
     tasksArray.sort((a, b) => {
-      const dateA = a[2]["Due Date:"];
-      const dateB = b[2]["Due Date:"];
+      const dateA = a[2]['Due Date:'];
+      const dateB = b[2]['Due Date:'];
 
       if (dateA && dateB) {
         return dateA - dateB;

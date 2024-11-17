@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "deploy": "git subtree push --prefix dist origin gh-pages",
+    "deploy": "bash ./pages.sh",
     "lint": "./node_modules/.bin/eslint"
   },
   "keywords": [],

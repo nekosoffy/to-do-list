@@ -174,13 +174,11 @@ button,
 
 .edit-btn:hover {
   filter: brightness(115%);
-  transform: scale(0.95);
 }
 
 .delete-btn:hover,
 .project-form .cancel-btn:hover {
   filter: brightness(120%);
-  transform: scale(0.95);
 }
 
 .edit-btn {
@@ -220,7 +218,6 @@ button,
 
 .project-form .confirm-btn:hover {
   filter: brightness(120%);
-  transform: scale(0.95);
 }
 
 .input-wrapper {
@@ -250,7 +247,6 @@ fieldset {
 #new-project:hover,
 #new-task:hover {
   filter: brightness(120%);
-  transform: scale(0.95);
 }
 
 .project-form input {
@@ -494,11 +490,6 @@ ul {
   filter: brightness(120%);
 }
 
-#checklist-item-delete:hover,
-#delete-checklist:hover {
-  transform: scale(0.95);
-}
-
 #new-checklist-button:active,
 #checklist-item-delete:active {
   filter: brightness(120%);
@@ -545,7 +536,6 @@ ul {
 #task-form .cancel-btn:hover,
 #task-form .confirm-btn:hover {
   filter: brightness(120%);
-  transform: scale(0.95);
 }
 
 #task-form .confirm-btn {

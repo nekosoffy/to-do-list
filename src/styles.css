@@ -173,12 +173,12 @@ button,
 }
 
 .edit-btn:hover {
-  filter: brightness(115%);
+  filter: brightness(80%);
 }
 
 .delete-btn:hover,
 .project-form .cancel-btn:hover {
-  filter: brightness(120%);
+  filter: brightness(80%);
 }
 
 .edit-btn {
@@ -217,7 +217,7 @@ button,
 }
 
 .project-form .confirm-btn:hover {
-  filter: brightness(120%);
+  filter: brightness(80%);
 }
 
 .input-wrapper {
@@ -246,7 +246,7 @@ fieldset {
 
 #new-project:hover,
 #new-task:hover {
-  filter: brightness(120%);
+  filter: brightness(80%);
 }
 
 .project-form input {
@@ -487,12 +487,12 @@ ul {
 #new-checklist-button:hover,
 #checklist-item-delete:hover,
 #delete-checklist:hover {
-  filter: brightness(120%);
+  filter: brightness(80%);
 }
 
 #new-checklist-button:active,
 #checklist-item-delete:active {
-  filter: brightness(120%);
+  filter: brightness(80%);
   transform: scale(0.95);
 }
 
@@ -535,7 +535,7 @@ ul {
 
 #task-form .cancel-btn:hover,
 #task-form .confirm-btn:hover {
-  filter: brightness(120%);
+  filter: brightness(80%);
 }
 
 #task-form .confirm-btn {

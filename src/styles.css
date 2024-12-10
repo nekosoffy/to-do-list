@@ -203,6 +203,7 @@ button,
 
 .project-form {
   background-color: var(--hover-color);
+  gap: 10px;
 }
 
 .project-form .confirm-btn {
@@ -223,7 +224,7 @@ button,
 .input-wrapper {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 fieldset {

@@ -251,16 +251,16 @@ fieldset {
 }
 
 .project-form input {
-  border-radius: 10px;
+  border-radius: 7px;
   padding: 3px;
-  border: 3px solid var(--hover-color);
+  border: none;
   outline: none;
 }
 
 .project-form input:focus,
 .project-form input:active {
-  border: 3px solid var(--selected-color);
-  border-radius: 10px;
+  outline: 3px solid var(--selected-color);
+  border-radius: 7px;
 }
 
 .project-wrapper li {
